@@ -1,0 +1,53 @@
+import type { Metadata } from "next";
+import { Inter, JetBrains_Mono } from "next/font/google";
+import "./globals.css";
+import { SmoothScroll } from "@/components/SmoothScroll";
+import CustomCursor from "@/components/ui/CustomCursor";
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: "Raul Florin | Portfolio",
+  description: "Portafolio personal de Raul Florin, Técnico en Sistemas Microinformáticos y Redes, especializado en ciberseguridad.",
+  keywords: ["SMR", "Sysadmin", "Ciberseguridad", "Redes", "Portfolio", "Raul Florin"],
+  authors: [{ name: "Raul Florin" }],
+  creator: "Raul Florin",
+  openGraph: {
+    title: "Raul Florin | Portfolio",
+    description: "Portafolio personal de Raul Florin, Técnico en Sistemas Microinformáticos y Redes, especializado en ciberseguridad.",
+    url: "https://raulflorin.dev",
+    siteName: "Raul Florin Portfolio",
+    locale: "es_ES",
+    type: "website",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html
+      lang="es"
+      className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-black text-white selection:bg-blue-500/30 selection:text-white`}
+    >
+      <body>
+        <SmoothScroll>
+          <CustomCursor />
+          {children}
+        </SmoothScroll>
+      </body>
+    </html>
+  );
+}
