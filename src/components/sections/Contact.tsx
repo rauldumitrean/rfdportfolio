@@ -162,7 +162,6 @@ export default function Contact({ settings }: { settings: Settings }) {
               {/* FormSubmit Configuration */}
               <input type="hidden" name="_subject" value="¡Nuevo mensaje desde tu Portafolio!" />
               <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_next" value={settings?.formRedirect || ""} />
 
               {errorMsg && (
                 <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl text-sm flex items-center gap-2">

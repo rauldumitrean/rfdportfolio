@@ -104,7 +104,7 @@ export default function Timeline({ settings }: { settings: Settings }) {
   const combinedTimeline = [
     ...experiences.map((e: Experience) => ({ ...e, type: 'experience' })),
     ...education.map((e: Education) => ({ ...e, type: 'education' }))
-  ].sort((a, b) => parseDate(a.period || a.date) - parseDate(b.period || b.date));
+  ].sort((a, b) => parseDate(a.period || a.date || "") - parseDate(b.period || b.date || ""));
 
   type TimelineItem = (Experience & { type: 'experience' }) | (Education & { type: 'education' });
 
