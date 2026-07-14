@@ -167,7 +167,7 @@ export default function Contact({ settings }: { settings: Settings }) {
               className="space-y-6 relative z-10"
             >
               {/* Hidden Inputs (opcionales para EmailJS, pero evitamos romper nada) */}
-              <input type="hidden" name="to_name" value={settings?.name || resumeData.personalInfo.name} />
+              <input type="hidden" name="to_name" value={resumeData.personalInfo.name} />
 
               {errorMsg && (
                 <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl text-sm flex items-center gap-2">
