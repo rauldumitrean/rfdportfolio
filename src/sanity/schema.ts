@@ -113,7 +113,8 @@ export const portfolioSettings = defineType({
             { name: "context", title: "Contexto (ej: Proyecto Personal)", type: "string" },
             { name: "description", title: "Descripción", type: "text" },
             { name: "imageUrl", title: "URL de la Imagen", type: "string" },
-            { name: "link", title: "Enlace (GitHub o Web)", type: "string" },
+            { name: "githubUrl", title: "URL del Repositorio (GitHub)", type: "string" },
+            { name: "liveUrl", title: "URL del Proyecto (Live)", type: "string" },
             { 
               name: "tags", 
               title: "Tecnologías (Tags)", 

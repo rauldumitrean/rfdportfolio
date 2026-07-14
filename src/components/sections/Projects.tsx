@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { resumeData } from "@/data/resumeData";
-import { ExternalLink, ShieldAlert, Server } from "lucide-react";
+import { ExternalLink, ShieldAlert, Server, Code2 } from "lucide-react";
 import { Settings, Project } from "@/types";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -72,7 +72,8 @@ export default function Projects({ settings }: { settings: Settings }) {
         title: p.title,
         description: p.description.join("\n"),
         tags: p.technologies,
-        link: "#",
+        githubUrl: "#",
+        liveUrl: "#",
         date: p.date,
         context: p.context
       }));
@@ -141,19 +142,30 @@ export default function Projects({ settings }: { settings: Settings }) {
                   ))}
                 </div>
 
-                {project.link && (
-                  <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center gap-4">
+                  {project.githubUrl && (
                     <a
-                      href={project.link === "#" ? "#" : project.link}
-                      target={project.link === "#" ? "_self" : "_blank"}
+                      href={project.githubUrl === "#" ? "#" : project.githubUrl}
+                      target={project.githubUrl === "#" ? "_self" : "_blank"}
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-full font-medium hover:scale-105 transition-all"
+                      onClick={(e) => { if (project.githubUrl === "#") e.preventDefault() }}
+                    >
+                      <Code2 size={18} /> Ver Código
+                    </a>
+                  )}
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl === "#" ? "#" : project.liveUrl}
+                      target={project.liveUrl === "#" ? "_self" : "_blank"}
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-black rounded-full font-medium hover:scale-105 transition-transform"
-                      onClick={(e) => { if (project.link === "#") e.preventDefault() }}
+                      onClick={(e) => { if (project.liveUrl === "#") e.preventDefault() }}
                     >
-                      {project.link === "#" ? "Ver Proyecto" : "Ver Código"} <ExternalLink size={18} />
+                      Ver Proyecto <ExternalLink size={18} />
                     </a>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           ))}

@@ -45,7 +45,8 @@ export interface Project {
   description: string | string[];
   imageUrl?: string;
   localPreviewUrl?: string;
-  link?: string;
+  githubUrl?: string;
+  liveUrl?: string;
 }
 
 export interface ResumeData {
