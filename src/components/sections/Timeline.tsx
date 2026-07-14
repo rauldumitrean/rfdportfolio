@@ -11,10 +11,17 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Timeline({ settings }: { settings: any }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const dotsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   const addToRefs = (el: HTMLDivElement | null) => {
     if (el && !itemsRef.current.includes(el)) {
       itemsRef.current.push(el);
+    }
+  };
+
+  const addToDots = (el: HTMLDivElement | null) => {
+    if (el && !dotsRef.current.includes(el)) {
+      dotsRef.current.push(el);
     }
   };
 
@@ -59,6 +66,21 @@ export default function Timeline({ settings }: { settings: any }) {
           }
         );
       });
+
+      // Dots fill animation
+      dotsRef.current.forEach((dot) => {
+        if (!dot) return;
+        const color = dot.getAttribute('data-color') || '#3b82f6';
+        gsap.to(dot, {
+          backgroundColor: color,
+          boxShadow: `0 0 20px ${color}`,
+          scrollTrigger: {
+            trigger: dot,
+            start: "top center",
+            toggleActions: "play none none reverse",
+          },
+        });
+      });
     }, containerRef);
 
     return () => ctx.revert();
@@ -79,7 +101,7 @@ export default function Timeline({ settings }: { settings: any }) {
 
         <div className="relative">
           {/* Main Timeline Line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-white/10 -translate-x-1/2">
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-white/10 -translate-x-1/2">
             <div className="timeline-line absolute top-0 left-0 w-full bg-gradient-to-b from-blue-500 via-purple-500 to-transparent shadow-[0_0_15px_rgba(59,130,246,0.5)]" />
           </div>
 
@@ -106,7 +128,11 @@ export default function Timeline({ settings }: { settings: any }) {
                       </div>
                     </div>
 
-                    <div className="absolute left-4 md:left-1/2 w-4 h-4 bg-black border-2 border-blue-500 rounded-full -translate-x-1/2 z-10 group-hover:scale-150 transition-transform duration-300 group-hover:bg-blue-500 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.8)]" />
+                    <div 
+                      ref={addToDots}
+                      data-color="#3b82f6"
+                      className="absolute left-4 md:left-1/2 w-4 h-4 bg-[#09090b] border-2 border-blue-500 rounded-full -translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-150" 
+                    />
 
                     <div className="flex w-full md:w-5/12 justify-start pl-12 md:pl-8 mt-4 md:mt-0">
                       <div className="flex items-center gap-2 text-gray-500 font-mono text-sm">
@@ -148,7 +174,11 @@ export default function Timeline({ settings }: { settings: any }) {
                       </div>
                     </div>
 
-                    <div className="absolute left-4 md:left-1/2 w-4 h-4 bg-black border-2 border-purple-500 rounded-full -translate-x-1/2 z-10 group-hover:scale-150 transition-transform duration-300 group-hover:bg-purple-500 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.8)]" />
+                    <div 
+                      ref={addToDots}
+                      data-color="#a855f7"
+                      className="absolute left-4 md:left-1/2 w-4 h-4 bg-[#09090b] border-2 border-purple-500 rounded-full -translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-150" 
+                    />
 
                     <div className="flex w-full md:w-5/12 justify-end pr-12 md:pr-8 mt-4 md:mt-0">
                       <div className="flex items-center gap-2 text-gray-500 font-mono text-sm flex-row-reverse md:flex-row">
