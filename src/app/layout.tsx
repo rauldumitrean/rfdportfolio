@@ -18,13 +18,13 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Raul Florin | Portfolio",
-  description: "Portafolio personal de Raul Florin, Técnico en Sistemas Microinformáticos y Redes, especializado en ciberseguridad.",
-  keywords: ["SMR", "Sysadmin", "Ciberseguridad", "Redes", "Portfolio", "Raul Florin"],
+  description: "Portafolio personal de Raul Florin, Desarrollador Web Junior y estudiante de Desarrollo de Aplicaciones Web (DAW).",
+  keywords: ["Desarrollador Web", "Frontend", "DAW", "Portfolio", "Raul Florin", "React", "Next.js"],
   authors: [{ name: "Raul Florin" }],
   creator: "Raul Florin",
   openGraph: {
     title: "Raul Florin | Portfolio",
-    description: "Portafolio personal de Raul Florin, Técnico en Sistemas Microinformáticos y Redes, especializado en ciberseguridad.",
+    description: "Portafolio personal de Raul Florin, Desarrollador Web Junior y estudiante de Desarrollo de Aplicaciones Web (DAW).",
     url: "https://raulflorin.dev",
     siteName: "Raul Florin Portfolio",
     locale: "es_ES",
