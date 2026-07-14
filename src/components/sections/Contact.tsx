@@ -25,13 +25,15 @@ export default function Contact({ settings }: { settings: Settings }) {
     const formData = new FormData(form);
     
     try {
-      // Realizamos la petición AJAX estándar a FormSubmit
-      const res = await fetch(form.action, {
+      const formProps = Object.fromEntries(formData);
+      
+      const res = await fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
         method: 'POST',
         headers: {
+            'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
-        body: formData
+        body: JSON.stringify(formProps)
       });
       
       if (!res.ok) throw new Error("Fallo en el servidor");
