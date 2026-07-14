@@ -41,7 +41,7 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
 
   const handleExperienceChange = (index: number, field: string, value: string) => {
     const newExp = [...experience];
-    newExp[index][field] = value;
+    newExp[index] = { ...newExp[index], [field]: value };
     setExperience(newExp);
   };
 
@@ -55,7 +55,7 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
 
   const handleEducationChange = (index: number, field: string, value: string) => {
     const newEdu = [...education];
-    newEdu[index][field] = value;
+    newEdu[index] = { ...newEdu[index], [field]: value };
     setEducation(newEdu);
   };
 
@@ -69,7 +69,7 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
 
   const handleSkillChange = (index: number, field: string, value: any) => {
     const newSkills = [...skills];
-    newSkills[index][field] = value;
+    newSkills[index] = { ...newSkills[index], [field]: value };
     setSkills(newSkills);
   };
 
@@ -83,7 +83,7 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
 
   const handleProjectChange = (index: number, field: string, value: any) => {
     const newProj = [...projects];
-    newProj[index][field] = value;
+    newProj[index] = { ...newProj[index], [field]: value };
     setProjects(newProj);
   };
 
