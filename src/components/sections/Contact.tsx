@@ -51,7 +51,20 @@ export default function Contact({ settings }: { settings: any }) {
   }, []);
 
   return (
-    <section id="contact" className="py-32 relative z-10" ref={containerRef}>
+    <>
+      {/* Toast Notification */}
+      <div 
+        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 transform ${
+          isSent ? "translate-y-0 opacity-100" : "-translate-y-24 opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="glass bg-green-500/10 border border-green-500/50 text-green-400 px-6 py-3 rounded-full flex items-center gap-3 shadow-[0_0_20px_rgba(34,197,94,0.2)]">
+          <CheckCircle2 size={20} />
+          <span className="font-medium">¡Mensaje enviado correctamente!</span>
+        </div>
+      </div>
+
+      <section id="contact" className="py-32 relative z-10" ref={containerRef}>
       <div className="max-w-5xl mx-auto px-6">
         <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center text-gradient contact-item">
           Contacto
@@ -125,7 +138,7 @@ export default function Contact({ settings }: { settings: any }) {
               {/* FormSubmit Configuration */}
               <input type="hidden" name="_subject" value="¡Nuevo mensaje desde tu Portafolio!" />
               <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_template" value="box" />
 
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-400 ml-1">Nombre</label>
@@ -164,19 +177,12 @@ export default function Contact({ settings }: { settings: any }) {
                 type="submit" 
                 disabled={isSubmitting || isSent}
                 className={`w-full py-4 rounded-xl font-medium transition-all flex items-center justify-center gap-2 group ${
-                  isSent 
-                    ? "bg-green-500/20 text-green-400 border border-green-500/50 cursor-default"
-                    : isSubmitting
+                  isSubmitting || isSent
                     ? "bg-blue-600/50 text-white cursor-wait"
                     : "bg-blue-600 hover:bg-blue-500 text-white hover:shadow-[0_0_20px_rgba(37,99,235,0.4)]"
                 }`}
               >
-                {isSent ? (
-                  <>
-                    <CheckCircle2 size={20} />
-                    <span>¡Mensaje Enviado!</span>
-                  </>
-                ) : isSubmitting ? (
+                {isSubmitting || isSent ? (
                   <span>Enviando...</span>
                 ) : (
                   <>
@@ -190,5 +196,6 @@ export default function Contact({ settings }: { settings: any }) {
         </div>
       </div>
     </section>
+    </>
   );
 }
