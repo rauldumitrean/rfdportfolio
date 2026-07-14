@@ -8,7 +8,8 @@ import { resumeData } from "@/data/resumeData";
 export const revalidate = 0; // Don't cache the admin page
 
 export default async function AdminDashboard() {
-  const settings = await client.fetch(getPortfolioSettingsQuery);
+  // const settings = await client.fetch(getPortfolioSettingsQuery);
+  const settings = null; // Bypassed to load local DAW data into Admin Panel
 
   return (
     <div className="min-h-screen bg-black text-white p-8 font-sans selection:bg-blue-500/30">
