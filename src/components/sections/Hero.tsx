@@ -60,7 +60,7 @@ export default function Hero({ settings }: { settings: any }) {
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden pt-20"
+      className="relative w-full min-h-[100svh] min-h-[700px] flex flex-col items-center justify-center overflow-hidden pt-20 pb-24"
     >
       {/* Decorative gradient glowing orb behind text */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] bg-blue-600/20 blur-[120px] rounded-full pointer-events-none z-0" />
