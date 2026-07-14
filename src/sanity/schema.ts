@@ -109,6 +109,8 @@ export const portfolioSettings = defineType({
           type: "object",
           fields: [
             { name: "title", title: "Título del Proyecto", type: "string" },
+            { name: "date", title: "Fecha (ej: Enero 2026)", type: "string" },
+            { name: "context", title: "Contexto (ej: Proyecto Personal)", type: "string" },
             { name: "description", title: "Descripción", type: "text" },
             { name: "imageUrl", title: "URL de la Imagen", type: "string" },
             { name: "link", title: "Enlace (GitHub o Web)", type: "string" },

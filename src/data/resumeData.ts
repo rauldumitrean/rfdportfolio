@@ -45,8 +45,8 @@ export const resumeData = {
     {
       title: "Portfolio Personal Interactivo",
       context: "Proyecto de Desarrollo Web",
-      date: "2026",
-      technologies: ["React", "Next.js", "Tailwind CSS", "GSAP", "TypeScript", "Sanity CMS", "Git", "Vercel"],
+      date: "Julio 2026",
+      technologies: ["React", "Next.js", "CSS", "GSAP", "TypeScript", "Sanity CMS", "Git", "Vercel"],
       description: [
         "Desarrollo de un portafolio web moderno y responsivo para mostrar proyectos y trayectoria profesional.",
         "Implementación de animaciones avanzadas y fluidas utilizando GSAP y ScrollTrigger.",
@@ -82,7 +82,7 @@ export const resumeData = {
         { name: "HTML/CSS", level: "Avanzado" },
         { name: "JavaScript", level: "Medio" },
         { name: "React / Next.js", level: "Medio" },
-        { name: "Tailwind", level: "Avanzado" },
+        { name: "CSS", level: "Avanzado" },
       ],
     },
     {
