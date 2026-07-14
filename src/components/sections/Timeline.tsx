@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
@@ -117,7 +117,7 @@ export default function Timeline({ settings }: { settings: any }) {
 
         <div className="relative">
           {/* Main Timeline Line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[4px] bg-white/10 -translate-x-1/2">
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[3px] bg-white/10 -translate-x-1/2">
             <div className="timeline-line absolute top-0 left-0 w-full bg-gradient-to-b from-blue-500 via-purple-500 to-transparent shadow-[0_0_15px_rgba(59,130,246,0.5)]" />
           </div>
 
@@ -140,6 +140,9 @@ export default function Timeline({ settings }: { settings: any }) {
                     >
                       <div className={"hidden md:flex w-5/12 " + (isLeft ? 'justify-end text-right pr-8' : 'justify-start text-left pl-8')}>
                         <div className={"glass p-6 rounded-2xl w-full border border-white/5 transition-all duration-300 hover:bg-white/5 " + hoverBorder}>
+                          <span className={"inline-block px-3 py-1 text-xs font-semibold rounded-full mb-3 border " + (isExp ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : 'bg-purple-500/10 text-purple-400 border-purple-500/20')}>
+                            {isExp ? 'Vida Laboral' : 'Formación Académica'}
+                          </span>
                           <h4 className="text-xl font-bold text-white mb-2">{item.title || item.role || item.degree}</h4>
                           <p className={"font-medium mb-4 " + textColor}>{item.company || item.institution || item.school}</p>
                           <p className="text-gray-400 text-sm whitespace-pre-wrap">{item.description || item.details}</p>
@@ -159,6 +162,9 @@ export default function Timeline({ settings }: { settings: any }) {
                         </div>
                         
                         <div className="md:hidden glass p-6 rounded-2xl w-full border border-white/5 mt-4">
+                          <span className={"inline-block px-3 py-1 text-xs font-semibold rounded-full mb-3 border " + (isExp ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : 'bg-purple-500/10 text-purple-400 border-purple-500/20')}>
+                            {isExp ? 'Vida Laboral' : 'Formación Académica'}
+                          </span>
                           <h4 className="text-xl font-bold text-white mb-2">{item.title || item.role || item.degree}</h4>
                           <p className={"font-medium mb-4 " + textColor}>{item.company || item.institution || item.school}</p>
                           <p className="text-gray-400 text-sm whitespace-pre-wrap">{item.description || item.details}</p>
