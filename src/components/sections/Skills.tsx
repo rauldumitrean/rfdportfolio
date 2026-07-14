@@ -4,10 +4,11 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { resumeData } from "@/data/resumeData";
+import { Settings, SkillCategory } from "@/types";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Skills({ settings }: { settings: any }) {
+export default function Skills({ settings }: { settings: Settings }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -47,9 +48,9 @@ export default function Skills({ settings }: { settings: any }) {
 
   const skillsData = settings?.skills?.length 
     ? settings.skills 
-    : resumeData.skills.map((s: any) => ({
+    : resumeData.skills.map((s: SkillCategory) => ({
         category: s.category,
-        items: s.items?.map((item: any) => typeof item === 'string' ? item : (item.name || item)) || []
+        items: s.items?.map((item: string | any) => typeof item === 'string' ? item : (item.name || item)) || []
       }));
 
   return (
@@ -60,7 +61,7 @@ export default function Skills({ settings }: { settings: any }) {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {skillsData.map((skillGroup: any, idx: number) => (
+          {skillsData.map((skillGroup: SkillCategory, idx: number) => (
             <div
               key={idx}
               ref={addToRefs}

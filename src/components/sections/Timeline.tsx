@@ -5,10 +5,11 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Briefcase, GraduationCap, Calendar } from "lucide-react";
 import { resumeData } from "@/data/resumeData";
+import { Settings, Experience, Education } from "@/types";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Timeline({ settings }: { settings: any }) {
+export default function Timeline({ settings }: { settings: Settings }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
   const dotsRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -101,9 +102,11 @@ export default function Timeline({ settings }: { settings: any }) {
   };
 
   const combinedTimeline = [
-    ...experiences.map((e: any) => ({ ...e, type: 'experience' })),
-    ...education.map((e: any) => ({ ...e, type: 'education' }))
+    ...experiences.map((e: Experience) => ({ ...e, type: 'experience' })),
+    ...education.map((e: Education) => ({ ...e, type: 'education' }))
   ].sort((a, b) => parseDate(a.period || a.date) - parseDate(b.period || b.date));
+
+  type TimelineItem = (Experience & { type: 'experience' }) | (Education & { type: 'education' });
 
   return (
     <section id="experience" className="py-32 relative z-10" ref={containerRef}>
@@ -141,7 +144,7 @@ export default function Timeline({ settings }: { settings: any }) {
               </div>
 
               <div className="space-y-12">
-                {combinedTimeline.map((item: any, idx: number) => {
+                {combinedTimeline.map((item: TimelineItem | any, idx: number) => {
                   const isExp = item.type === 'experience';
                   const isLeft = !isExp;
                   const hexColor = isExp ? '#3b82f6' : '#a855f7';

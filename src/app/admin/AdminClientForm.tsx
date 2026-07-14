@@ -3,8 +3,10 @@
 import { useState, useRef } from "react";
 import { savePortfolioSettings } from "@/app/actions/sanity";
 import { Save, User, Mail, Link as LinkIcon, Briefcase, GraduationCap, FolderGit2, Plus, Trash2, TerminalSquare, AlertTriangle, CheckCircle2, X, UploadCloud, ImageIcon } from "lucide-react";
+import Image from "next/image";
+import { Settings, Experience, Education, SkillCategory, Project } from "@/types";
 
-export default function AdminClientForm({ settings, fallbackData }: { settings: any, fallbackData: any }) {
+export default function AdminClientForm({ settings, fallbackData }: { settings: Settings, fallbackData: Settings }) {
   const formRef = useRef<HTMLFormElement>(null);
   const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -171,10 +173,10 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
     <>
       <form ref={formRef} className="space-y-8">
         {/* Hidden inputs to pass JSON arrays to Server Action */}
-      <input type="hidden" name="experience" value={JSON.stringify(experience.map((e: any) => ({...e, _key: e._key || Date.now().toString() + Math.random()})))} />
-      <input type="hidden" name="education" value={JSON.stringify(education.map((e: any) => ({...e, _key: e._key || Date.now().toString() + Math.random()})))} />
-      <input type="hidden" name="skills" value={JSON.stringify(skills.map((e: any) => ({...e, _key: e._key || Date.now().toString() + Math.random()})))} />
-      <input type="hidden" name="projects" value={JSON.stringify(projects.map((e: any) => ({...e, _key: e._key || Date.now().toString() + Math.random()})))} />
+      <input type="hidden" name="experience" value={JSON.stringify(experience.map((e: Experience) => ({...e, _key: e._key})))} />
+      <input type="hidden" name="education" value={JSON.stringify(education.map((e: Education) => ({...e, _key: e._key})))} />
+      <input type="hidden" name="skills" value={JSON.stringify(skills.map((e: SkillCategory) => ({...e, _key: e._key})))} />
+      <input type="hidden" name="projects" value={JSON.stringify(projects.map((e: Project) => ({...e, _key: e._key})))} />
 
       {/* Textos Principales */}
       <section className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md">
@@ -241,7 +243,7 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
           </button>
         </div>
         <div className="space-y-6">
-          {experience.map((exp: any, index: number) => (
+          {experience.map((exp: Experience, index: number) => (
             <div key={index} className="bg-black/30 p-4 rounded-xl border border-white/5 relative group">
               <button type="button" onClick={() => handleRemoveExperience(index)} className="absolute top-4 right-4 text-gray-500 hover:text-red-400 opacity-0 md:opacity-100 transition">
                 <Trash2 size={18} />
@@ -268,7 +270,7 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
           </button>
         </div>
         <div className="space-y-6">
-          {education.map((edu: any, index: number) => (
+          {education.map((edu: Education, index: number) => (
             <div key={index} className="bg-black/30 p-4 rounded-xl border border-white/5 relative group">
               <button type="button" onClick={() => handleRemoveEducation(index)} className="absolute top-4 right-4 text-gray-500 hover:text-red-400 opacity-0 md:opacity-100 transition">
                 <Trash2 size={18} />
@@ -295,14 +297,14 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
           </button>
         </div>
         <div className="space-y-6">
-          {skills.map((skill: any, index: number) => (
+          {skills.map((skillGroup: SkillCategory, index: number) => (
             <div key={index} className="bg-black/30 p-4 rounded-xl border border-white/5 relative group">
               <button type="button" onClick={() => handleRemoveSkill(index)} className="absolute top-4 right-4 text-gray-500 hover:text-red-400 opacity-0 md:opacity-100 transition">
                 <Trash2 size={18} />
               </button>
               <div className="pr-8 space-y-4">
-                <input type="text" placeholder="Categoría (ej: Frontend, Herramientas...)" value={skill.category} onChange={(e) => handleSkillChange(index, "category", e.target.value)} className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500/50" />
-                <input type="text" placeholder="Tecnologías (separadas por comas)" value={skill.items ? skill.items.join(", ") : ""} onChange={(e) => handleSkillChange(index, "items", e.target.value.split(",").map((t: string) => t.trim()))} className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500/50" />
+                <input type="text" placeholder="Categoría (ej: Frontend, Herramientas...)" value={skillGroup.category} onChange={(e) => handleSkillChange(index, "category", e.target.value)} className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500/50" />
+                <input type="text" placeholder="Tecnologías (separadas por comas)" value={skillGroup.items ? skillGroup.items.join(", ") : ""} onChange={(e) => handleSkillChange(index, "items", e.target.value.split(",").map((t: string) => t.trim()))} className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500/50" />
               </div>
             </div>
           ))}
@@ -320,7 +322,7 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
           </button>
         </div>
         <div className="space-y-6">
-          {projects.map((proj: any, index: number) => (
+          {projects.map((proj: Project, index: number) => (
             <div key={index} className="bg-black/30 p-4 rounded-xl border border-white/5 relative group">
               <button type="button" onClick={() => handleRemoveProject(index)} className="absolute top-4 right-4 text-gray-500 hover:text-red-400 opacity-0 md:opacity-100 transition">
                 <Trash2 size={18} />
@@ -347,7 +349,7 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
                   />
                   {(proj.localPreviewUrl || proj.imageUrl) ? (
                     <>
-                      <img src={proj.localPreviewUrl || proj.imageUrl} alt="Preview" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/upload:opacity-30 transition-opacity" />
+                      <Image src={proj.localPreviewUrl || proj.imageUrl} alt="Preview" fill unoptimized className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/upload:opacity-30 transition-opacity" />
                       <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover/upload:opacity-100 transition-opacity">
                         <UploadCloud size={32} className="text-white drop-shadow-md mb-2" />
                         <span className="text-sm font-medium text-white drop-shadow-md">Cambiar imagen</span>

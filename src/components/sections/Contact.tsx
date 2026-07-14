@@ -5,27 +5,43 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { resumeData } from "@/data/resumeData";
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from "lucide-react";
+import { Settings } from "@/types";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Contact({ settings }: { settings: any }) {
+export default function Contact({ settings }: { settings: Settings }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSent, setIsSent] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    // No usamos e.preventDefault() porque queremos que el form se envíe al iframe oculto
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsSubmitting(true);
+    setErrorMsg("");
     
-    // Simulamos el tiempo de envío para la animación
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSent(true);
-      (e.target as HTMLFormElement).reset();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    
+    try {
+      // Using no-cors prevents the browser from blocking the request and prevents the page from hanging,
+      // even if the destination service is slow or returns an opaque response.
+      await fetch(form.action, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+      });
       
-      // Reset success state after 5 seconds
+      setIsSent(true);
+      form.reset();
       setTimeout(() => setIsSent(false), 5000);
-    }, 1500);
+    } catch (err) {
+      setErrorMsg("Error de conexión, intenta más tarde.");
+      setTimeout(() => setErrorMsg(""), 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   useEffect(() => {
@@ -137,20 +153,22 @@ export default function Contact({ settings }: { settings: any }) {
              {/* Decorative glow */}
              <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-600/20 blur-[80px] rounded-full pointer-events-none" />
              
-            {/* Iframe oculto para evitar redirección de formsubmit */}
-            <iframe name="hidden_iframe" id="hidden_iframe" style={{ display: "none" }}></iframe>
-
             <form 
               action={`https://formsubmit.co/${settings?.contactEmail || resumeData.personalInfo.email}`} 
               method="POST" 
-              target="hidden_iframe"
               onSubmit={handleSubmit}
               className="space-y-6 relative z-10"
             >
               {/* FormSubmit Configuration */}
               <input type="hidden" name="_subject" value="¡Nuevo mensaje desde tu Portafolio!" />
               <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_template" value="box" />
+              <input type="hidden" name="_next" value={settings?.formRedirect || ""} />
+
+              {errorMsg && (
+                <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl text-sm flex items-center gap-2">
+                  <span className="animate-pulse">⚠️</span> {errorMsg}
+                </div>
+              )}
 
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-400 ml-1">Nombre</label>

@@ -4,17 +4,18 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { resumeData } from "@/data/resumeData";
-import { ExternalLink, ShieldAlert, Server, ChevronRight } from "lucide-react";
+import { ExternalLink, ShieldAlert, Server } from "lucide-react";
+import { Settings, Project } from "@/types";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Projects({ settings }: { settings: any }) {
+export default function Projects({ settings }: { settings: Settings }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      projectsRef.current.forEach((project, i) => {
+      projectsRef.current.forEach((project) => {
         if (!project) return;
         
         gsap.fromTo(
@@ -84,7 +85,7 @@ export default function Projects({ settings }: { settings: any }) {
         </h2>
 
         <div className="space-y-32">
-          {projectsData.map((project: any, idx: number) => (
+          {projectsData.map((project: Project, idx: number) => (
             <div
               key={idx}
               ref={addToRefs}

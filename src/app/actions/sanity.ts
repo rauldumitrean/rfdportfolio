@@ -21,7 +21,7 @@ export async function savePortfolioSettings(formData: FormData) {
     const skillsJson = formData.get("skills") as string;
     const projectsJson = formData.get("projects") as string;
 
-    const generateKey = (prefix: string, index: number) => `${prefix}_${Date.now()}_${index}`;
+    const generateKey = (prefix: string, index: number) => `${prefix}_${crypto.randomUUID()}_${index}`;
 
     // Process Projects and Upload Images if any
     let parsedProjects = projectsJson ? JSON.parse(projectsJson) : [];

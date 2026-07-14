@@ -4,8 +4,9 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { resumeData } from "@/data/resumeData";
 import { ArrowDown, Terminal } from "lucide-react";
+import { Settings } from "@/types";
 
-export default function Hero({ settings }: { settings: any }) {
+export default function Hero({ settings }: { settings: Settings }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const subtitleRef = useRef<HTMLDivElement>(null);

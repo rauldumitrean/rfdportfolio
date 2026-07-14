@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useMemo } from "react";
+import { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
 
@@ -8,8 +8,8 @@ import { Points, PointMaterial } from "@react-three/drei";
 const Particles = () => {
   const ref = useRef<any>(null);
   
-  // Generate random points in a sphere
-  const sphere = useMemo(() => {
+  // Generate random points in a sphere exactly once
+  const [sphere] = useState(() => {
     const count = 5000;
     const positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
@@ -21,7 +21,7 @@ const Particles = () => {
       positions[i * 3 + 2] = r * Math.cos(phi);
     }
     return positions;
-  }, []);
+  });
 
   useFrame((state, delta) => {
     if (ref.current) {
