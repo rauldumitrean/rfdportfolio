@@ -11,7 +11,8 @@ import Footer from "@/components/sections/Footer";
 export const revalidate = 60; // Revalidate every minute
 
 export default async function Home() {
-  const settings = await client.fetch(getPortfolioSettingsQuery);
+  // const settings = await client.fetch(getPortfolioSettingsQuery);
+  const settings = null; // Bypassed to read directly from resumeData.ts
 
   return (
     <main className="relative min-h-screen w-full flex flex-col">
