@@ -45,7 +45,7 @@ export default function Contact({ settings }: { settings: any }) {
           <div className="space-y-8 contact-item">
             <h3 className="text-3xl font-bold text-white mb-6">Hablemos.</h3>
             <p className="text-gray-400 text-lg mb-8">
-              Estoy buscando mi primera oportunidad como Técnico de Soporte IT o Sysadmin Junior. Si crees que mi perfil encaja con lo que buscas, no dudes en contactarme.
+              Estoy buscando mi primera oportunidad como Desarrollador Web Junior. Si crees que mi perfil encaja con lo que buscas, no dudes en contactarme.
             </p>
 
             <div className="space-y-6">
