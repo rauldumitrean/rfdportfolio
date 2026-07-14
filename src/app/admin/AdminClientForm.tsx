@@ -4,9 +4,9 @@ import { useState, useRef } from "react";
 import { savePortfolioSettings } from "@/app/actions/sanity";
 import { Save, User, Mail, Link as LinkIcon, Briefcase, GraduationCap, FolderGit2, Plus, Trash2, TerminalSquare, AlertTriangle, CheckCircle2, X, UploadCloud, ImageIcon } from "lucide-react";
 import Image from "next/image";
-import { Settings, Experience, Education, SkillCategory, Project } from "@/types";
+import { Settings, Experience, Education, SkillCategory, Project, ResumeData } from "@/types";
 
-export default function AdminClientForm({ settings, fallbackData }: { settings: Settings, fallbackData: Settings }) {
+export default function AdminClientForm({ settings, fallbackData }: { settings: Settings, fallbackData: ResumeData }) {
   const formRef = useRef<HTMLFormElement>(null);
   const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -14,9 +14,9 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
   const [errorMsg, setErrorMsg] = useState("");
   const [changesSummary, setChangesSummary] = useState<string[]>([]);
 
-  const initialExperience = settings?.experience || fallbackData.experience;
-  const initialEducation = settings?.education || fallbackData.education;
-  const initialProjects = settings?.projects || fallbackData.projects;
+  const initialExperience = settings?.experience || fallbackData.experience || [];
+  const initialEducation = settings?.education || fallbackData.education || [];
+  const initialProjects = settings?.projects || fallbackData.projects || [];
 
   const [experience, setExperience] = useState(initialExperience);
   const [education, setEducation] = useState(initialEducation);
@@ -34,7 +34,7 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
   const [projects, setProjects] = useState(initialProjects);
 
   const handleAddExperience = () => {
-    setExperience([...experience, { _key: Date.now().toString(), title: "", company: "", period: "", description: "" }]);
+    setExperience([...(experience || []), { _key: Date.now().toString(), title: "", company: "", period: "", description: "" }]);
   };
 
   const handleRemoveExperience = (index: number) => {
@@ -48,7 +48,7 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
   };
 
   const handleAddEducation = () => {
-    setEducation([...education, { _key: Date.now().toString(), degree: "", institution: "", period: "", details: "" }]);
+    setEducation([...(education || []), { _key: Date.now().toString(), degree: "", institution: "", period: "", details: "" }]);
   };
 
   const handleRemoveEducation = (index: number) => {
@@ -62,7 +62,7 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
   };
 
   const handleAddSkill = () => {
-    setSkills([...skills, { _key: Date.now().toString(), category: "", items: [] }]);
+    setSkills([...(skills || []), { _key: Date.now().toString(), category: "", items: [] }]);
   };
 
   const handleRemoveSkill = (index: number) => {
@@ -76,7 +76,7 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
   };
 
   const handleAddProject = () => {
-    setProjects([...projects, { _key: Date.now().toString(), title: "", description: "", imageUrl: "", link: "", tags: [] }]);
+    setProjects([...(projects || []), { _key: Date.now().toString(), title: "", description: [""], technologies: [], imageUrl: "", link: "", context: "", date: "" }]);
   };
 
   const handleRemoveProject = (index: number) => {
@@ -349,7 +349,7 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
                   />
                   {(proj.localPreviewUrl || proj.imageUrl) ? (
                     <>
-                      <Image src={proj.localPreviewUrl || proj.imageUrl} alt="Preview" fill unoptimized className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/upload:opacity-30 transition-opacity" />
+                      <Image src={proj.localPreviewUrl || proj.imageUrl || ""} alt="Preview" fill unoptimized className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/upload:opacity-30 transition-opacity" />
                       <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover/upload:opacity-100 transition-opacity">
                         <UploadCloud size={32} className="text-white drop-shadow-md mb-2" />
                         <span className="text-sm font-medium text-white drop-shadow-md">Cambiar imagen</span>

@@ -87,14 +87,12 @@ export const resumeData = {
       "date": "Julio 2026",
       "technologies": [],
       "description": [
-        [
-          "Desarrollo de un portafolio web moderno y responsivo para mostrar proyectos y trayectoria profesional.",
-          "Implementación de animaciones avanzadas y fluidas utilizando GSAP y ScrollTrigger.",
-          "Integración de un panel de administración personalizado (CMS Headless) utilizando Sanity para gestionar el contenido dinámicamente sin tocar código.",
-          "Diseño UI/UX con Tailwind CSS enfocado en la usabilidad, modo oscuro y estética minimalista.",
-          "Despliegue automatizado en Vercel mediante CI/CD con GitHub.",
-          "Gestión de formularios de contacto conectada a correos electrónicos en tiempo real."
-        ]
+        "Desarrollo de un portafolio web moderno y responsivo para mostrar proyectos y trayectoria profesional.",
+        "Implementación de animaciones avanzadas y fluidas utilizando GSAP y ScrollTrigger.",
+        "Integración de un panel de administración personalizado (CMS Headless) utilizando Sanity para gestionar el contenido dinámicamente sin tocar código.",
+        "Diseño UI/UX con Tailwind CSS enfocado en la usabilidad, modo oscuro y estética minimalista.",
+        "Despliegue automatizado en Vercel mediante CI/CD con GitHub.",
+        "Gestión de formularios de contacto conectada a correos electrónicos en tiempo real."
       ],
       "imageUrl": "",
       "link": "https://github.com/rauldumitrean/rfdportfolio"
@@ -105,15 +103,13 @@ export const resumeData = {
       "date": "Febrero 2026",
       "technologies": [],
       "description": [
-        [
-          "Despliegue de Ubuntu Server con configuración de interfaces de red mediante Netplan.",
-          "Instalación y configuración de Snort en modo NIDS para monitorización de tráfico en tiempo real.",
-          "Definición de reglas de detección de amenazas: escaneos de puertos, accesos no autorizados y tráfico anómalo.",
-          "Implementación de stack EFK (Elasticsearch, Filebeat y Kibana) como sistema SIEM para visualización de alertas.",
-          "Configuración de Filebeat para envío de logs de Snort a Elasticsearch.",
-          "Fase de pruebas con ataques controlados mediante Nmap e inundaciones ICMP para validar detección.",
-          "Proyecto realizado de forma individual."
-        ]
+        "Despliegue de Ubuntu Server con configuración de interfaces de red mediante Netplan.",
+        "Instalación y configuración de Snort en modo NIDS para monitorización de tráfico en tiempo real.",
+        "Definición de reglas de detección de amenazas: escaneos de puertos, accesos no autorizados y tráfico anómalo.",
+        "Implementación de stack EFK (Elasticsearch, Filebeat y Kibana) como sistema SIEM para visualización de alertas.",
+        "Configuración de Filebeat para envío de logs de Snort a Elasticsearch.",
+        "Fase de pruebas con ataques controlados mediante Nmap e inundaciones ICMP para validar detección.",
+        "Proyecto realizado de forma individual."
       ],
       "imageUrl": "",
       "link": ""
