@@ -56,6 +56,21 @@ export const resumeData = {
         "Gestión de formularios de contacto conectada a correos electrónicos en tiempo real.",
       ],
     },
+    {
+      title: "Sistema de Detección de Intrusos con Snort",
+      context: "Proyecto Final de Ciclo SMR",
+      date: "2026",
+      technologies: ["Ubuntu Server", "Netplan", "Snort", "NIDS", "EFK", "Elasticsearch", "Filebeat", "Kibana", "Nmap", "ICMP"],
+      description: [
+        "Despliegue de Ubuntu Server con configuración de interfaces de red mediante Netplan.",
+        "Instalación y configuración de Snort en modo NIDS para monitorización de tráfico en tiempo real.",
+        "Definición de reglas de detección de amenazas: escaneos de puertos, accesos no autorizados y tráfico anómalo.",
+        "Implementación de stack EFK (Elasticsearch, Filebeat y Kibana) como sistema SIEM para visualización de alertas.",
+        "Configuración de Filebeat para envío de logs de Snort a Elasticsearch.",
+        "Fase de pruebas con ataques controlados mediante Nmap e inundaciones ICMP para validar detección.",
+        "Proyecto realizado de forma individual.",
+      ],
+    },
   ],
   certifications: [
     "Certificado de Formación de Nivel Básico en Prevención de Riesgos Laborales (2026)",
