@@ -52,15 +52,27 @@ export default function Contact({ settings }: { settings: any }) {
 
   return (
     <>
-      {/* Toast Notification */}
+      {/* Toast Notification with unfolding animation */}
       <div 
-        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 transform ${
-          isSent ? "translate-y-0 opacity-100" : "-translate-y-24 opacity-0 pointer-events-none"
+        className={`fixed top-6 left-6 md:left-10 z-50 transition-all duration-500 transform ${
+          isSent ? "translate-x-0 opacity-100" : "-translate-x-24 opacity-0 pointer-events-none"
         }`}
       >
-        <div className="glass bg-green-500/10 border border-green-500/50 text-green-400 px-6 py-3 rounded-full flex items-center gap-3 shadow-[0_0_20px_rgba(34,197,94,0.2)]">
-          <CheckCircle2 size={20} />
-          <span className="font-medium">¡Mensaje enviado correctamente!</span>
+        <div 
+          className={`glass bg-green-500/10 border border-green-500/50 text-green-400 p-3 rounded-full flex items-center shadow-[0_0_20px_rgba(34,197,94,0.2)] transition-all duration-500 ease-out overflow-hidden ${
+            isSent ? "max-w-[280px] delay-500" : "max-w-[48px] delay-0"
+          }`}
+        >
+          <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
+            <CheckCircle2 size={20} />
+          </div>
+          <span 
+            className={`font-medium whitespace-nowrap transition-all duration-500 ${
+              isSent ? "opacity-100 ml-3 delay-500" : "opacity-0 ml-0 delay-0"
+            }`}
+          >
+            ¡Mensaje enviado!
+          </span>
         </div>
       </div>
 
