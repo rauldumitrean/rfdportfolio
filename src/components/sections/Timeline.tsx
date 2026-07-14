@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Briefcase, GraduationCap, Calendar, ChevronRight } from "lucide-react";
+import { Briefcase, GraduationCap, Calendar } from "lucide-react";
 import { resumeData } from "@/data/resumeData";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -65,21 +65,21 @@ export default function Timeline({ settings }: { settings: any }) {
             },
           }
         );
-      });
 
-      // Dots fill animation
-      dotsRef.current.forEach((dot) => {
-        if (!dot) return;
-        const color = dot.getAttribute('data-color') || '#3b82f6';
-        gsap.to(dot, {
-          backgroundColor: color,
-          boxShadow: `0 0 20px ${color}`,
-          scrollTrigger: {
-            trigger: dot,
-            start: "top center",
-            toggleActions: "play none none reverse",
-          },
-        });
+        // Dot fill animation
+        const dot = dotsRef.current[i];
+        if (dot) {
+          const color = dot.getAttribute('data-color') || '#3b82f6';
+          gsap.to(dot, {
+            backgroundColor: color,
+            boxShadow: "0 0 20px " + color,
+            scrollTrigger: {
+              trigger: item,
+              start: "top center",
+              toggleActions: "play none none reverse",
+            },
+          });
+        }
       });
     }, containerRef);
 
@@ -88,6 +88,22 @@ export default function Timeline({ settings }: { settings: any }) {
 
   const experiences = settings?.experience?.length ? settings.experience : resumeData.experience;
   const education = settings?.education?.length ? settings.education : resumeData.education;
+
+  const parseDate = (dateStr: string) => {
+    if (!dateStr) return 0;
+    const match = dateStr.match(/(ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)?\s*(\d{4})/i);
+    if (!match) return parseInt(dateStr.match(/\d{4}/)?.[0] || '0', 10) * 100;
+    const month = match[1];
+    const year = parseInt(match[2], 10);
+    const monthNames = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+    const monthIdx = month ? monthNames.indexOf(month.toLowerCase()) : 0;
+    return year * 100 + monthIdx;
+  };
+
+  const combinedTimeline = [
+    ...experiences.map((e: any) => ({ ...e, type: 'experience' })),
+    ...education.map((e: any) => ({ ...e, type: 'education' }))
+  ].sort((a, b) => parseDate(a.period || a.date) - parseDate(b.period || b.date));
 
   return (
     <section id="experience" className="py-32 relative z-10" ref={containerRef}>
@@ -101,100 +117,56 @@ export default function Timeline({ settings }: { settings: any }) {
 
         <div className="relative">
           {/* Main Timeline Line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-white/10 -translate-x-1/2">
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[4px] bg-white/10 -translate-x-1/2">
             <div className="timeline-line absolute top-0 left-0 w-full bg-gradient-to-b from-blue-500 via-purple-500 to-transparent shadow-[0_0_15px_rgba(59,130,246,0.5)]" />
           </div>
 
           <div className="space-y-16">
-            {/* Experience Section */}
             <div className="mb-24">
-              <div className="flex items-center gap-4 mb-8 justify-center">
-                <Briefcase className="text-blue-500" size={28} />
-                <h3 className="text-2xl font-semibold">Experiencia Laboral</h3>
-              </div>
-              
               <div className="space-y-12">
-                {experiences.map((exp: any, idx: number) => (
-                  <div
-                    key={idx}
-                    ref={addToRefs}
-                    className="relative flex flex-col md:flex-row items-center justify-between group"
-                  >
-                    <div className="hidden md:flex w-5/12 justify-end text-right pr-8">
-                      <div className="glass p-6 rounded-2xl w-full border border-white/5 transition-all duration-300 hover:border-blue-500/50 hover:bg-white/5">
-                        <h4 className="text-xl font-bold text-white mb-2">{exp.title || exp.role}</h4>
-                        <p className="text-blue-400 font-medium mb-4">{exp.company}</p>
-                        <p className="text-gray-400 text-sm whitespace-pre-wrap">{exp.description}</p>
+                {combinedTimeline.map((item: any, idx: number) => {
+                  const isLeft = idx % 2 === 0;
+                  const isExp = item.type === 'experience';
+                  const hexColor = isExp ? '#3b82f6' : '#a855f7';
+                  const hoverBorder = isExp ? 'hover:border-blue-500/50' : 'hover:border-purple-500/50';
+                  const textColor = isExp ? 'text-blue-400' : 'text-purple-400';
+                  const borderColor = isExp ? 'border-blue-500' : 'border-purple-500';
+
+                  return (
+                    <div
+                      key={idx}
+                      ref={addToRefs}
+                      className={"relative flex flex-col md:flex-row items-center justify-between group " + (!isLeft ? 'md:flex-row-reverse' : '')}
+                    >
+                      <div className={"hidden md:flex w-5/12 " + (isLeft ? 'justify-end text-right pr-8' : 'justify-start text-left pl-8')}>
+                        <div className={"glass p-6 rounded-2xl w-full border border-white/5 transition-all duration-300 hover:bg-white/5 " + hoverBorder}>
+                          <h4 className="text-xl font-bold text-white mb-2">{item.title || item.role || item.degree}</h4>
+                          <p className={"font-medium mb-4 " + textColor}>{item.company || item.institution || item.school}</p>
+                          <p className="text-gray-400 text-sm whitespace-pre-wrap">{item.description || item.details}</p>
+                        </div>
+                      </div>
+
+                      <div 
+                        ref={addToDots}
+                        data-color={hexColor}
+                        className={"absolute left-4 md:left-1/2 w-5 h-5 bg-[#09090b] border-[3px] rounded-full -translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-125 " + borderColor} 
+                      />
+
+                      <div className={"flex w-full md:w-5/12 mt-4 md:mt-0 " + (isLeft ? 'justify-start pl-12 md:pl-8' : 'justify-end pr-12 md:pr-8')}>
+                        <div className={"flex items-center gap-2 text-gray-500 font-mono text-sm " + (!isLeft ? 'flex-row-reverse md:flex-row' : '')}>
+                          <Calendar size={16} />
+                          {item.period || item.date}
+                        </div>
+                        
+                        <div className="md:hidden glass p-6 rounded-2xl w-full border border-white/5 mt-4">
+                          <h4 className="text-xl font-bold text-white mb-2">{item.title || item.role || item.degree}</h4>
+                          <p className={"font-medium mb-4 " + textColor}>{item.company || item.institution || item.school}</p>
+                          <p className="text-gray-400 text-sm whitespace-pre-wrap">{item.description || item.details}</p>
+                        </div>
                       </div>
                     </div>
-
-                    <div 
-                      ref={addToDots}
-                      data-color="#3b82f6"
-                      className="absolute left-4 md:left-1/2 w-4 h-4 bg-[#09090b] border-2 border-blue-500 rounded-full -translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-150" 
-                    />
-
-                    <div className="flex w-full md:w-5/12 justify-start pl-12 md:pl-8 mt-4 md:mt-0">
-                      <div className="flex items-center gap-2 text-gray-500 font-mono text-sm">
-                        <Calendar size={16} />
-                        {exp.period || exp.date}
-                      </div>
-                      
-                      {/* Mobile Card */}
-                      <div className="md:hidden glass p-6 rounded-2xl w-full border border-white/5 mt-4">
-                        <h4 className="text-xl font-bold text-white mb-2">{exp.title || exp.role}</h4>
-                        <p className="text-blue-400 font-medium mb-4">{exp.company}</p>
-                        <p className="text-gray-400 text-sm whitespace-pre-wrap">{exp.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Education Section */}
-            <div>
-              <div className="flex items-center gap-4 mb-8 justify-center">
-                <GraduationCap className="text-purple-500" size={28} />
-                <h3 className="text-2xl font-semibold">Formación Académica</h3>
-              </div>
-
-              <div className="space-y-12">
-                {education.map((edu: any, idx: number) => (
-                  <div
-                    key={idx}
-                    ref={addToRefs}
-                    className="relative flex flex-col md:flex-row-reverse items-center justify-between group"
-                  >
-                    <div className="hidden md:flex w-5/12 justify-start text-left pl-8">
-                      <div className="glass p-6 rounded-2xl w-full border border-white/5 transition-all duration-300 hover:border-purple-500/50 hover:bg-white/5">
-                        <h4 className="text-xl font-bold text-white mb-2">{edu.degree}</h4>
-                        <p className="text-purple-400 font-medium mb-4">{edu.institution || edu.school}</p>
-                        <p className="text-gray-400 text-sm whitespace-pre-wrap">{edu.details}</p>
-                      </div>
-                    </div>
-
-                    <div 
-                      ref={addToDots}
-                      data-color="#a855f7"
-                      className="absolute left-4 md:left-1/2 w-4 h-4 bg-[#09090b] border-2 border-purple-500 rounded-full -translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-150" 
-                    />
-
-                    <div className="flex w-full md:w-5/12 justify-end pr-12 md:pr-8 mt-4 md:mt-0">
-                      <div className="flex items-center gap-2 text-gray-500 font-mono text-sm flex-row-reverse md:flex-row">
-                        <Calendar size={16} />
-                        {edu.period || edu.date}
-                      </div>
-
-                      {/* Mobile Card */}
-                      <div className="md:hidden glass p-6 rounded-2xl w-full border border-white/5 mt-4">
-                        <h4 className="text-xl font-bold text-white mb-2">{edu.degree}</h4>
-                        <p className="text-purple-400 font-medium mb-4">{edu.institution || edu.school}</p>
-                        <p className="text-gray-400 text-sm whitespace-pre-wrap">{edu.details}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
