@@ -16,36 +16,19 @@ export default function Contact({ settings }: { settings: Settings }) {
 
   const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleSubmit = () => {
     setIsSubmitting(true);
     setErrorMsg("");
-    
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    
-    try {
-      const formProps = Object.fromEntries(formData);
-      
-      const res = await fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify(formProps)
-      });
-      
-      if (!res.ok) throw new Error("Fallo en el servidor");
-      
-      setIsSent(true);
-      form.reset();
-      setTimeout(() => setIsSent(false), 5000);
-    } catch (err) {
-      setErrorMsg("Error de conexión, intenta más tarde.");
-      setTimeout(() => setErrorMsg(""), 5000);
-    } finally {
+  };
+
+  const handleIframeLoad = () => {
+    if (isSubmitting) {
       setIsSubmitting(false);
+      setIsSent(true);
+      formRef.current?.reset();
+      setTimeout(() => setIsSent(false), 5000);
     }
   };
 
@@ -158,9 +141,14 @@ export default function Contact({ settings }: { settings: Settings }) {
              {/* Decorative glow */}
              <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-600/20 blur-[80px] rounded-full pointer-events-none" />
              
+            {/* Iframe oculto para evitar redirección y saltar fallos AJAX de FormSubmit */}
+            <iframe name="hidden_iframe" id="hidden_iframe" style={{ display: "none" }} onLoad={handleIframeLoad}></iframe>
+
             <form 
+              ref={formRef}
               action={`https://formsubmit.co/${settings?.contactEmail || resumeData.personalInfo.email}`} 
               method="POST" 
+              target="hidden_iframe"
               onSubmit={handleSubmit}
               className="space-y-6 relative z-10"
             >
