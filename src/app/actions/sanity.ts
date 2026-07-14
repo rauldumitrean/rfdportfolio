@@ -24,7 +24,7 @@ export async function savePortfolioSettings(formData: FormData) {
     const generateKey = (prefix: string, index: number) => `${prefix}_${crypto.randomUUID()}_${index}`;
 
     // Process Projects and Upload Images if any
-    let parsedProjects = projectsJson ? JSON.parse(projectsJson) : [];
+    const parsedProjects = projectsJson ? JSON.parse(projectsJson) : [];
     for (let i = 0; i < parsedProjects.length; i++) {
       const file = formData.get(`projectImage_${i}`) as File | null;
       if (file && file.size > 0) {
@@ -50,9 +50,9 @@ export async function savePortfolioSettings(formData: FormData) {
       contactPhone: formData.get("contactPhone") as string || undefined,
       githubUrl: formData.get("githubUrl") as string || undefined,
       linkedinUrl: formData.get("linkedinUrl") as string || undefined,
-      experience: experienceJson ? JSON.parse(experienceJson).map((e: any, i: number) => ({...e, _key: generateKey("exp", i)})) : [],
-      education: educationJson ? JSON.parse(educationJson).map((e: any, i: number) => ({...e, _key: generateKey("edu", i)})) : [],
-      skills: skillsJson ? JSON.parse(skillsJson).map((e: any, i: number) => ({...e, _key: generateKey("skill", i)})) : [],
+      experience: experienceJson ? JSON.parse(experienceJson).map((e: Record<string, unknown>, i: number) => ({...e, _key: generateKey("exp", i)})) : [],
+      education: educationJson ? JSON.parse(educationJson).map((e: Record<string, unknown>, i: number) => ({...e, _key: generateKey("edu", i)})) : [],
+      skills: skillsJson ? JSON.parse(skillsJson).map((e: Record<string, unknown>, i: number) => ({...e, _key: generateKey("skill", i)})) : [],
       projects: parsedProjects,
     };
 

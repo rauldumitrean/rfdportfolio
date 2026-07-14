@@ -43,9 +43,9 @@ export default function Contact({ settings }: { settings: Settings }) {
       setIsSent(true);
       formRef.current?.reset();
       setTimeout(() => setIsSent(false), 5000);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error enviando email:", error);
-      setErrorMsg(error?.message || "Error de conexión, intenta más tarde.");
+      setErrorMsg((error as Error)?.message || "Error de conexión, intenta más tarde.");
       setTimeout(() => setErrorMsg(""), 5000);
     } finally {
       setIsSubmitting(false);

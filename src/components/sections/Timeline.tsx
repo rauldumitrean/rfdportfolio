@@ -144,7 +144,7 @@ export default function Timeline({ settings }: { settings: Settings }) {
               </div>
 
               <div className="space-y-12">
-                {combinedTimeline.map((item: TimelineItem | any, idx: number) => {
+                {combinedTimeline.map((item: Record<string, string>, idx: number) => {
                   const isExp = item.type === 'experience';
                   const isLeft = !isExp;
                   const hexColor = isExp ? '#3b82f6' : '#a855f7';

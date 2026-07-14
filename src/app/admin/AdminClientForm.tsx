@@ -18,27 +18,28 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
   const initialEducation = settings?.education || fallbackData.education || [];
   const initialProjects = settings?.projects || fallbackData.projects || [];
 
-  const [experience, setExperience] = useState(initialExperience);
-  const [education, setEducation] = useState(initialEducation);
+  const [experience, setExperience] = useState<Experience[]>(initialExperience);
+  const [education, setEducation] = useState<Education[]>(initialEducation);
   
-  const mapSkills = (skillsArray: any) => {
-    return skillsArray.map((s: any) => ({
-      category: s.category,
-      items: s.items?.map((item: any) => typeof item === 'string' ? item : (item?.name || "")) || []
+  const mapSkills = (skillsArray: Partial<SkillCategory>[]): SkillCategory[] => {
+    return skillsArray.map((s) => ({
+      _key: s._key || Date.now().toString(),
+      category: s.category || "",
+      items: s.items?.map((item: unknown) => typeof item === 'string' ? item : ((item as Record<string, string>)?.name || "")) || []
     }));
   };
   
   const initialSkills = settings?.skills?.length ? mapSkills(settings.skills) : mapSkills(fallbackData.skills);
-  const [skills, setSkills] = useState(initialSkills);
+  const [skills, setSkills] = useState<SkillCategory[]>(initialSkills);
   
-  const [projects, setProjects] = useState(initialProjects);
+  const [projects, setProjects] = useState<Project[]>(initialProjects);
 
   const handleAddExperience = () => {
     setExperience([...(experience || []), { _key: Date.now().toString(), title: "", company: "", period: "", description: "" }]);
   };
 
   const handleRemoveExperience = (index: number) => {
-    setExperience(experience.filter((_: any, i: number) => i !== index));
+    setExperience(experience.filter((_: Experience, i: number) => i !== index));
   };
 
   const handleExperienceChange = (index: number, field: string, value: string) => {
@@ -52,7 +53,7 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
   };
 
   const handleRemoveEducation = (index: number) => {
-    setEducation(education.filter((_: any, i: number) => i !== index));
+    setEducation(education.filter((_: Education, i: number) => i !== index));
   };
 
   const handleEducationChange = (index: number, field: string, value: string) => {
@@ -66,10 +67,10 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
   };
 
   const handleRemoveSkill = (index: number) => {
-    setSkills(skills.filter((_: any, i: number) => i !== index));
+    setSkills(skills.filter((_: SkillCategory, i: number) => i !== index));
   };
 
-  const handleSkillChange = (index: number, field: string, value: any) => {
+  const handleSkillChange = (index: number, field: string, value: string | string[]) => {
     const newSkills = [...skills];
     newSkills[index] = { ...newSkills[index], [field]: value };
     setSkills(newSkills);
@@ -80,10 +81,10 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
   };
 
   const handleRemoveProject = (index: number) => {
-    setProjects(projects.filter((_: any, i: number) => i !== index));
+    setProjects(projects.filter((_: Project, i: number) => i !== index));
   };
 
-  const handleProjectChange = (index: number, field: string, value: any) => {
+  const handleProjectChange = (index: number, field: string, value: string | string[]) => {
     const newProj = [...projects];
     newProj[index] = { ...newProj[index], [field]: value };
     setProjects(newProj);
@@ -162,8 +163,8 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
         setShowModal(false);
         setSuccessMsg("");
       }, 3000);
-    } catch (err: any) {
-      setErrorMsg(err.message || "Error al guardar. Verifica la contraseña.");
+    } catch (err: unknown) {
+      setErrorMsg((err as Error).message || "Error al guardar. Verifica la contraseña.");
     } finally {
       setIsSubmitting(false);
     }

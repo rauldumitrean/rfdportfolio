@@ -4,9 +4,10 @@ import { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
 
+import * as THREE from 'three';
 
 const Particles = () => {
-  const ref = useRef<any>(null);
+  const ref = useRef<THREE.Points>(null);
   
   // Generate random points in a sphere exactly once
   const [sphere] = useState(() => {

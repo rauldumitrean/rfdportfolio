@@ -50,7 +50,7 @@ export default function Skills({ settings }: { settings: Settings }) {
     ? settings.skills 
     : resumeData.skills.map((s: SkillCategory) => ({
         category: s.category,
-        items: s.items?.map((item: string | any) => typeof item === 'string' ? item : (item.name || item)) || []
+        items: s.items?.map((item: unknown) => typeof item === 'string' ? item : ((item as Record<string, string>).name || String(item))) || []
       }));
 
   return (
@@ -79,8 +79,8 @@ export default function Skills({ settings }: { settings: Settings }) {
               </h3>
 
               <div className="flex flex-wrap gap-2 mt-auto">
-                {skillGroup.items.map((item: any, i: number) => {
-                  const itemName = typeof item === 'string' ? item : item.name;
+                {skillGroup.items.map((item: unknown, i: number) => {
+                  const itemName = typeof item === 'string' ? item : (item as Record<string, string>).name;
                   return (
                     <span 
                       key={i}
