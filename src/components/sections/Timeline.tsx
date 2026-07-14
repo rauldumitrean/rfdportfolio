@@ -123,10 +123,27 @@ export default function Timeline({ settings }: { settings: any }) {
 
           <div className="space-y-16">
             <div className="mb-24">
+              {/* Column Headers (Desktop Only) */}
+              <div className="hidden md:flex justify-between w-full mb-12 relative z-10">
+                <div className="w-5/12 flex justify-end pr-8">
+                  <div className="flex items-center gap-3 text-purple-400">
+                    <h3 className="text-2xl font-bold">Formación Académica</h3>
+                    <GraduationCap size={28} />
+                  </div>
+                </div>
+                <div className="w-2/12" />
+                <div className="w-5/12 flex justify-start pl-8">
+                  <div className="flex items-center gap-3 text-blue-400">
+                    <Briefcase size={28} />
+                    <h3 className="text-2xl font-bold">Vida Laboral</h3>
+                  </div>
+                </div>
+              </div>
+
               <div className="space-y-12">
                 {combinedTimeline.map((item: any, idx: number) => {
-                  const isLeft = idx % 2 === 0;
                   const isExp = item.type === 'experience';
+                  const isLeft = !isExp;
                   const hexColor = isExp ? '#3b82f6' : '#a855f7';
                   const hoverBorder = isExp ? 'hover:border-blue-500/50' : 'hover:border-purple-500/50';
                   const textColor = isExp ? 'text-blue-400' : 'text-purple-400';
@@ -140,9 +157,6 @@ export default function Timeline({ settings }: { settings: any }) {
                     >
                       <div className={"hidden md:flex w-5/12 " + (isLeft ? 'justify-end text-right pr-8' : 'justify-start text-left pl-8')}>
                         <div className={"glass p-6 rounded-2xl w-full border border-white/5 transition-all duration-300 hover:bg-white/5 " + hoverBorder}>
-                          <span className={"inline-block px-3 py-1 text-xs font-semibold rounded-full mb-3 border " + (isExp ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : 'bg-purple-500/10 text-purple-400 border-purple-500/20')}>
-                            {isExp ? 'Vida Laboral' : 'Formación Académica'}
-                          </span>
                           <h4 className="text-xl font-bold text-white mb-2">{item.title || item.role || item.degree}</h4>
                           <p className={"font-medium mb-4 " + textColor}>{item.company || item.institution || item.school}</p>
                           <p className="text-gray-400 text-sm whitespace-pre-wrap">{item.description || item.details}</p>
