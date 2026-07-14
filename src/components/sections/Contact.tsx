@@ -22,7 +22,9 @@ export default function Contact({ settings }: { settings: any }) {
     const data = Object.fromEntries(formData.entries());
     
     try {
-      await fetch(form.action, {
+      const endpoint = settings?.formEndpoint || resumeData.personalInfo.formEndpoint;
+      
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
@@ -30,6 +32,11 @@ export default function Contact({ settings }: { settings: any }) {
         },
         body: JSON.stringify(data)
       });
+      
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
       setIsSent(true);
       form.reset();
       
@@ -128,8 +135,6 @@ export default function Contact({ settings }: { settings: any }) {
              <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-600/20 blur-[80px] rounded-full pointer-events-none" />
              
             <form 
-              action={`https://formsubmit.co/ajax/${settings?.contactEmail || resumeData.personalInfo.email}`} 
-              method="POST" 
               onSubmit={handleSubmit}
               className="space-y-6 relative z-10"
             >
