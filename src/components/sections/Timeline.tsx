@@ -117,8 +117,8 @@ export default function Timeline({ settings }: { settings: any }) {
 
         <div className="relative">
           {/* Main Timeline Line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[3px] bg-white/10 -translate-x-1/2">
-            <div className="timeline-line absolute top-0 left-0 w-full bg-gradient-to-b from-blue-500 via-purple-500 to-transparent shadow-[0_0_15px_rgba(59,130,246,0.5)]" />
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2.5px] rounded-full bg-white/10 -translate-x-1/2">
+            <div className="timeline-line absolute top-0 left-0 w-full rounded-full bg-gradient-to-b from-blue-500 via-purple-500 to-transparent shadow-[0_0_15px_rgba(59,130,246,0.5)]" />
           </div>
 
           <div className="space-y-16">
