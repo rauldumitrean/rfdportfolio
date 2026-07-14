@@ -47,9 +47,9 @@ export default function Skills({ settings }: { settings: any }) {
 
   const skillsData = settings?.skills?.length 
     ? settings.skills 
-    : resumeData.skills.map(s => ({
+    : resumeData.skills.map((s: any) => ({
         category: s.category,
-        items: s.items.map(item => item.name)
+        items: s.items?.map((item: any) => typeof item === 'string' ? item : (item.name || item)) || []
       }));
 
   return (
