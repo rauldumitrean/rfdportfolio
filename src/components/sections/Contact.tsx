@@ -25,13 +25,16 @@ export default function Contact({ settings }: { settings: Settings }) {
     const formData = new FormData(form);
     
     try {
-      // Using no-cors prevents the browser from blocking the request and prevents the page from hanging,
-      // even if the destination service is slow or returns an opaque response.
-      await fetch(form.action, {
+      // Realizamos la petición AJAX estándar a FormSubmit
+      const res = await fetch(form.action, {
         method: 'POST',
-        mode: 'no-cors',
+        headers: {
+            'Accept': 'application/json'
+        },
         body: formData
       });
+      
+      if (!res.ok) throw new Error("Fallo en el servidor");
       
       setIsSent(true);
       form.reset();
@@ -216,13 +219,17 @@ export default function Contact({ settings }: { settings: Settings }) {
                 type="submit" 
                 disabled={isSubmitting || isSent}
                 className={`w-full py-4 rounded-xl font-medium transition-all flex items-center justify-center gap-2 group ${
-                  isSubmitting || isSent
+                  isSubmitting
                     ? "bg-blue-600/50 text-white cursor-wait"
+                    : isSent
+                    ? "bg-green-600 text-white cursor-default"
                     : "bg-blue-600 hover:bg-blue-500 text-white hover:shadow-[0_0_20px_rgba(37,99,235,0.4)]"
                 }`}
               >
-                {isSubmitting || isSent ? (
+                {isSubmitting ? (
                   <span>Enviando...</span>
+                ) : isSent ? (
+                  <span>Enviado ✓</span>
                 ) : (
                   <>
                     <span>Enviar Mensaje</span>
