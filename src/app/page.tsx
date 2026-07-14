@@ -1,5 +1,5 @@
-import { client } from "@/sanity/lib/client";
-import { getPortfolioSettingsQuery } from "@/sanity/lib/queries";
+// import { client } from "@/sanity/lib/client";
+// import { getPortfolioSettingsQuery } from "@/sanity/lib/queries";
 import Background3D from "@/components/canvas/Background3D";
 import Hero from "@/components/sections/Hero";
 import Timeline from "@/components/sections/Timeline";
