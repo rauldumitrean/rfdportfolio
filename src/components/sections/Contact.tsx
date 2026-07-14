@@ -1,15 +1,44 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { resumeData } from "@/data/resumeData";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle2 } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Contact({ settings }: { settings: any }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    
+    try {
+      await fetch(form.action, {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      setIsSent(true);
+      form.reset();
+      
+      // Reset success state after 5 seconds
+      setTimeout(() => setIsSent(false), 5000);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -98,6 +127,7 @@ export default function Contact({ settings }: { settings: any }) {
             <form 
               action={`https://formsubmit.co/${settings?.contactEmail || resumeData.personalInfo.email}`} 
               method="POST" 
+              onSubmit={handleSubmit}
               className="space-y-6 relative z-10"
             >
               {/* FormSubmit Configuration */}
@@ -138,9 +168,30 @@ export default function Contact({ settings }: { settings: any }) {
                 />
               </div>
 
-              <button type="submit" className="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-medium transition-all hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] flex items-center justify-center gap-2 group">
-                <span>Enviar Mensaje</span>
-                <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              <button 
+                type="submit" 
+                disabled={isSubmitting || isSent}
+                className={`w-full py-4 rounded-xl font-medium transition-all flex items-center justify-center gap-2 group ${
+                  isSent 
+                    ? "bg-green-500/20 text-green-400 border border-green-500/50 cursor-default"
+                    : isSubmitting
+                    ? "bg-blue-600/50 text-white cursor-wait"
+                    : "bg-blue-600 hover:bg-blue-500 text-white hover:shadow-[0_0_20px_rgba(37,99,235,0.4)]"
+                }`}
+              >
+                {isSent ? (
+                  <>
+                    <CheckCircle2 size={20} />
+                    <span>¡Mensaje Enviado!</span>
+                  </>
+                ) : isSubmitting ? (
+                  <span>Enviando...</span>
+                ) : (
+                  <>
+                    <span>Enviar Mensaje</span>
+                    <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </>
+                )}
               </button>
             </form>
           </div>

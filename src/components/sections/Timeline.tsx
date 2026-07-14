@@ -169,8 +169,8 @@ export default function Timeline({ settings }: { settings: any }) {
                         className={"absolute left-4 md:left-1/2 w-5 h-5 bg-[#09090b] border-[3px] rounded-full -translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-125 " + borderColor} 
                       />
 
-                      <div className={"flex w-full md:w-5/12 mt-4 md:mt-0 " + (isLeft ? 'justify-start pl-12 md:pl-8' : 'justify-end pr-12 md:pr-8')}>
-                        <div className={"flex items-center gap-2 text-gray-500 font-mono text-sm " + (!isLeft ? 'flex-row-reverse md:flex-row' : '')}>
+                      <div className={"flex flex-col w-full md:w-5/12 mt-4 md:mt-0 pl-12 md:pl-0 " + (isLeft ? 'md:pl-8 md:justify-start items-start' : 'md:pr-8 md:justify-end md:items-end items-start')}>
+                        <div className={"flex items-center gap-2 text-gray-500 font-mono text-sm " + (!isLeft ? 'md:flex-row-reverse' : '')}>
                           <Calendar size={16} />
                           {item.period || item.date}
                         </div>

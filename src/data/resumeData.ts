@@ -79,10 +79,10 @@ export const resumeData = {
     {
       category: "Frontend",
       items: [
-        { name: "HTML5/CSS3", level: "Avanzado" },
-        { name: "JavaScript/ES6+", level: "Medio" },
+        { name: "HTML/CSS", level: "Avanzado" },
+        { name: "JavaScript", level: "Medio" },
         { name: "React / Next.js", level: "Medio" },
-        { name: "Tailwind CSS", level: "Avanzado" },
+        { name: "Tailwind", level: "Avanzado" },
       ],
     },
     {
