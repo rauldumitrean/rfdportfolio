@@ -7,7 +7,6 @@ export const resumeData = {
     location: "Ávila, España",
     github: "https://github.com/rauldumitrean",
     linkedin: "https://www.linkedin.com/in/raul-dumitrean-aa6238414",
-    formEndpoint: "https://formspree.io/f/TU_ID_AQUI",
     profile:
       "Apasionado por la programación y el diseño de interfaces. Próximo estudiante del Grado Superior en Desarrollo de Aplicaciones Web (DAW) con sólida base técnica en Sistemas (SMR). Busco mi primera oportunidad como Desarrollador Frontend o Fullstack Junior para seguir aprendiendo y aportando valor mediante código limpio y soluciones modernas.",
     drivingLicense: "Tipo B",

@@ -13,41 +13,19 @@ export default function Contact({ settings }: { settings: any }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSent, setIsSent] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // No usamos e.preventDefault() porque queremos que el form se envíe al iframe oculto
     setIsSubmitting(true);
     
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-    
-    try {
-      const endpoint = settings?.formEndpoint || resumeData.personalInfo.formEndpoint;
-      
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-      
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
+    // Simulamos el tiempo de envío para la animación
+    setTimeout(() => {
+      setIsSubmitting(false);
       setIsSent(true);
-      form.reset();
+      (e.target as HTMLFormElement).reset();
       
       // Reset success state after 5 seconds
       setTimeout(() => setIsSent(false), 5000);
-    } catch (err) {
-      console.error(err);
-      alert("Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    }, 1500);
   };
 
   useEffect(() => {
@@ -134,7 +112,13 @@ export default function Contact({ settings }: { settings: any }) {
              {/* Decorative glow */}
              <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-600/20 blur-[80px] rounded-full pointer-events-none" />
              
+            {/* Iframe oculto para evitar redirección de formsubmit */}
+            <iframe name="hidden_iframe" id="hidden_iframe" style={{ display: "none" }}></iframe>
+
             <form 
+              action={`https://formsubmit.co/${settings?.contactEmail || resumeData.personalInfo.email}`} 
+              method="POST" 
+              target="hidden_iframe"
               onSubmit={handleSubmit}
               className="space-y-6 relative z-10"
             >
