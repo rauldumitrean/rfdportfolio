@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { resumeData } from "@/data/resumeData";
+import emailjs from '@emailjs/browser';
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from "lucide-react";
 import { Settings } from "@/types";
 
@@ -18,17 +19,36 @@ export default function Contact({ settings }: { settings: Settings }) {
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsSubmitting(true);
     setErrorMsg("");
-  };
 
-  const handleIframeLoad = () => {
-    if (isSubmitting) {
-      setIsSubmitting(false);
+    try {
+      if (
+        !process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 
+        !process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 
+        !process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      ) {
+        throw new Error("Faltan las claves de configuración de EmailJS. Por favor, añádelas en el archivo .env.local y en Vercel.");
+      }
+
+      await emailjs.sendForm(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        formRef.current!,
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      );
+
       setIsSent(true);
       formRef.current?.reset();
       setTimeout(() => setIsSent(false), 5000);
+    } catch (error: any) {
+      console.error("Error enviando email:", error);
+      setErrorMsg(error?.message || "Error de conexión, intenta más tarde.");
+      setTimeout(() => setErrorMsg(""), 5000);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -141,20 +161,13 @@ export default function Contact({ settings }: { settings: Settings }) {
              {/* Decorative glow */}
              <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-600/20 blur-[80px] rounded-full pointer-events-none" />
              
-            {/* Iframe oculto para evitar redirección y saltar fallos AJAX de FormSubmit */}
-            <iframe name="hidden_iframe" id="hidden_iframe" style={{ display: "none" }} onLoad={handleIframeLoad}></iframe>
-
             <form 
               ref={formRef}
-              action={`https://formsubmit.co/${settings?.contactEmail || resumeData.personalInfo.email}`} 
-              method="POST" 
-              target="hidden_iframe"
               onSubmit={handleSubmit}
               className="space-y-6 relative z-10"
             >
-              {/* FormSubmit Configuration */}
-              <input type="hidden" name="_subject" value="¡Nuevo mensaje desde tu Portafolio!" />
-              <input type="hidden" name="_captcha" value="false" />
+              {/* Hidden Inputs (opcionales para EmailJS, pero evitamos romper nada) */}
+              <input type="hidden" name="to_name" value={settings?.name || resumeData.personalInfo.name} />
 
               {errorMsg && (
                 <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl text-sm flex items-center gap-2">
