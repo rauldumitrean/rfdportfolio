@@ -19,14 +19,16 @@ export default function Contact({ settings }: { settings: any }) {
     
     const form = e.currentTarget;
     const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
     
     try {
       await fetch(form.action, {
         method: "POST",
-        body: formData,
         headers: {
+          'Content-Type': 'application/json',
           'Accept': 'application/json'
-        }
+        },
+        body: JSON.stringify(data)
       });
       setIsSent(true);
       form.reset();
@@ -35,6 +37,7 @@ export default function Contact({ settings }: { settings: any }) {
       setTimeout(() => setIsSent(false), 5000);
     } catch (err) {
       console.error(err);
+      alert("Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.");
     } finally {
       setIsSubmitting(false);
     }
