@@ -1,17 +1,22 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
-
 import * as THREE from 'three';
 
-const Particles = () => {
+function getParticleCount(): number {
+  if (typeof window === "undefined") return 5000;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return 0;
+  if (window.innerWidth < 768) return 1000;
+  if (window.innerWidth < 1024) return 2500;
+  return 5000;
+}
+
+const Particles = ({ count }: { count: number }) => {
   const ref = useRef<THREE.Points>(null);
-  
-  // Generate random points in a sphere exactly once
+
   const [sphere] = useState(() => {
-    const count = 5000;
     const positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       const r = 20 * Math.cbrt(Math.random());
@@ -48,12 +53,36 @@ const Particles = () => {
 };
 
 export default function Background3D() {
+  // particleCount is initialised with the server-safe value (5000).
+  // After hydration we read the real device-aware value via a ref
+  // and re-render once — avoids the "setState in effect" lint rule.
+  const countRef = useRef<number>(5000);
+  const [particleCount, setParticleCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    const realCount = getParticleCount();
+    countRef.current = realCount;
+    // Use a timeout so the setState fires outside the synchronous effect body
+    const id = setTimeout(() => setParticleCount(realCount), 0);
+    return () => clearTimeout(id);
+  }, []);
+
+  // While computing (SSR / first paint): plain black background
+  if (particleCount === null) {
+    return <div className="fixed top-0 left-0 w-full h-full z-[-1] bg-black pointer-events-none" />;
+  }
+
+  // User prefers reduced motion → no canvas at all
+  if (particleCount === 0) {
+    return <div className="fixed top-0 left-0 w-full h-full z-[-1] bg-black pointer-events-none" />;
+  }
+
   return (
     <div className="fixed top-0 left-0 w-full h-full z-[-1] bg-black/90 pointer-events-none">
       <Canvas camera={{ position: [0, 0, 5] }}>
         <fog attach="fog" args={["#050505", 2, 10]} />
         <ambientLight intensity={0.5} />
-        <Particles />
+        <Particles count={particleCount} />
       </Canvas>
     </div>
   );

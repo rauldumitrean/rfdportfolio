@@ -92,12 +92,29 @@ export default function Timeline({ settings }: { settings: Settings }) {
 
   const parseDate = (dateStr: string) => {
     if (!dateStr) return 0;
-    const match = dateStr.match(/(ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)?\s*(\d{4})/i);
-    if (!match) return parseInt(dateStr.match(/\d{4}/)?.[0] || '0', 10) * 100;
-    const month = match[1];
-    const year = parseInt(match[2], 10);
-    const monthNames = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
-    const monthIdx = month ? monthNames.indexOf(month.toLowerCase()) : 0;
+    // Support both short (ene, feb) and full (enero, febrero) Spanish month names
+    const monthMap: Record<string, number> = {
+      "ene": 0, "enero": 0,
+      "feb": 1, "febrero": 1,
+      "mar": 2, "marzo": 2,
+      "abr": 3, "abril": 3,
+      "may": 4, "mayo": 4,
+      "jun": 5, "junio": 5,
+      "jul": 6, "julio": 6,
+      "ago": 7, "agosto": 7,
+      "sep": 8, "sept": 8, "septiembre": 8,
+      "oct": 9, "octubre": 9,
+      "nov": 10, "noviembre": 10,
+      "dic": 11, "diciembre": 11,
+    };
+    const yearMatch = dateStr.match(/(\d{4})/);
+    if (!yearMatch) return 0;
+    const year = parseInt(yearMatch[1], 10);
+    const lower = dateStr.toLowerCase();
+    let monthIdx = 0;
+    for (const [key, val] of Object.entries(monthMap)) {
+      if (lower.includes(key)) { monthIdx = val; break; }
+    }
     return year * 100 + monthIdx;
   };
 
@@ -106,7 +123,6 @@ export default function Timeline({ settings }: { settings: Settings }) {
     ...education.map((e: Education) => ({ ...e, type: 'education' }))
   ].sort((a, b) => parseDate(a.period || a.date || "") - parseDate(b.period || b.date || ""));
 
-  type TimelineItem = (Experience & { type: 'experience' }) | (Education & { type: 'education' });
 
   return (
     <section id="experience" className="py-32 relative z-10" ref={containerRef}>
@@ -119,15 +135,15 @@ export default function Timeline({ settings }: { settings: Settings }) {
         </div>
 
         <div className="relative">
-          {/* Main Timeline Line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2.5px] rounded-full bg-white/10 -translate-x-1/2">
+          {/* Main Timeline Line — offset left on mobile, centered on lg+ */}
+          <div className="absolute left-4 lg:left-1/2 top-0 bottom-0 w-[2.5px] rounded-full bg-white/10 -translate-x-1/2">
             <div className="timeline-line absolute top-0 left-0 w-full rounded-full bg-gradient-to-b from-blue-500 via-purple-500 to-transparent shadow-[0_0_15px_rgba(59,130,246,0.5)]" />
           </div>
 
           <div className="space-y-16">
             <div className="mb-24">
-              {/* Column Headers (Desktop Only) */}
-              <div className="hidden md:flex justify-between w-full mb-12 relative z-10">
+              {/* Column Headers (Desktop Only — lg+) */}
+              <div className="hidden lg:flex justify-between w-full mb-12 relative z-10">
                 <div className="w-5/12 flex justify-end pr-8">
                   <div className="flex items-center gap-3 text-purple-400">
                     <h3 className="text-2xl font-bold">Formación Académica</h3>
@@ -156,9 +172,9 @@ export default function Timeline({ settings }: { settings: Settings }) {
                     <div
                       key={idx}
                       ref={addToRefs}
-                      className={"relative flex flex-col md:flex-row items-center justify-between group " + (!isLeft ? 'md:flex-row-reverse' : '')}
+                      className={"relative flex flex-col lg:flex-row items-center justify-between group " + (!isLeft ? 'lg:flex-row-reverse' : '')}
                     >
-                      <div className={"hidden md:flex w-5/12 " + (isLeft ? 'justify-end text-right pr-8' : 'justify-start text-left pl-8')}>
+                      <div className={"hidden lg:flex w-5/12 " + (isLeft ? 'justify-end text-right pr-8' : 'justify-start text-left pl-8')}>
                         <div className={"glass p-6 rounded-2xl w-full border border-white/5 transition-all duration-300 hover:bg-white/5 " + hoverBorder}>
                           <h4 className="text-xl font-bold text-white mb-2">{item.title || item.role || item.degree}</h4>
                           <p className={"font-medium mb-4 " + textColor}>{item.company || item.institution || item.school}</p>
@@ -169,10 +185,10 @@ export default function Timeline({ settings }: { settings: Settings }) {
                       <div 
                         ref={addToDots}
                         data-color={hexColor}
-                        className={"absolute left-4 md:left-1/2 w-5 h-5 bg-[#09090b] border-[3px] rounded-full -translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-125 " + borderColor} 
+                        className={"absolute left-4 lg:left-1/2 w-5 h-5 bg-[#09090b] border-[3px] rounded-full -translate-x-1/2 z-10 transition-all duration-300 group-hover:scale-125 " + borderColor} 
                       />
 
-                      <div className={"flex flex-col w-full md:w-5/12 mt-4 md:mt-0 pl-12 md:pl-0 " + (isLeft ? 'md:pl-8 md:justify-start items-start' : 'md:pr-8 md:justify-end md:items-end items-start')}>
+                      <div className={"flex flex-col w-full lg:w-5/12 mt-4 lg:mt-0 pl-12 lg:pl-0 " + (isLeft ? 'lg:pl-8 lg:justify-start items-start' : 'lg:pr-8 lg:justify-end lg:items-end items-start')}>
                         <div className={"flex items-center gap-2 text-gray-500 font-mono text-sm " + (!isLeft ? 'md:flex-row-reverse' : '')}>
                           <Calendar size={16} />
                           {item.period || item.date}

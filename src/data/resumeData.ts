@@ -3,7 +3,7 @@ export const resumeData = {
     "name": "Raul Dumitrean",
     "profile": "Apasionado por la programación y el diseño de interfaces. Próximo estudiante del Grado Superior en Desarrollo de Aplicaciones Web (DAW) con sólida base técnica en Sistemas (SMR). Busco mi primera oportunidad como Desarrollador Frontend o Fullstack Junior para seguir aprendiendo y aportando valor mediante código limpio y soluciones modernas.",
     "email": "raul.dumitrean07@gmail.com",
-    "phone": "+34 658 545 662",
+    "phone": "",
     "location": "Ávila, España",
     "github": "https://github.com/rauldumitrean",
     "linkedin": "https://www.linkedin.com/in/raul-dumitrean-aa6238414"
@@ -95,7 +95,8 @@ export const resumeData = {
         "Gestión de formularios de contacto conectada a correos electrónicos en tiempo real."
       ],
       "imageUrl": "",
-      "link": "https://github.com/rauldumitrean/rfdportfolio"
+      "githubUrl": "https://github.com/rauldumitrean/rfdportfolio",
+      "liveUrl": "https://rfdportfolio.vercel.app"
     },
     {
       "title": "Sistema de Detección de Intrusos con Snort",
@@ -112,7 +113,8 @@ export const resumeData = {
         "Proyecto realizado de forma individual."
       ],
       "imageUrl": "",
-      "link": ""
+      "githubUrl": "",
+      "liveUrl": ""
     }
   ]
 };

@@ -18,9 +18,24 @@ export default function Contact({ settings }: { settings: Settings }) {
   const [errorMsg, setErrorMsg] = useState("");
 
   const formRef = useRef<HTMLFormElement>(null);
+  const lastSubmitRef = useRef<number>(0);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Honeypot check: if the hidden field has a value, it's a bot
+    const honeypot = formRef.current?.querySelector<HTMLInputElement>('[name="_honey"]');
+    if (honeypot?.value) return; // Silently reject bots
+
+    // Rate limiting: prevent more than 1 submit per 30 seconds
+    const now = Date.now();
+    if (now - lastSubmitRef.current < 30000) {
+      setErrorMsg("Por favor espera unos segundos antes de volver a enviar.");
+      setTimeout(() => setErrorMsg(""), 5000);
+      return;
+    }
+    lastSubmitRef.current = now;
+
     setIsSubmitting(true);
     setErrorMsg("");
 
@@ -166,7 +181,17 @@ export default function Contact({ settings }: { settings: Settings }) {
               onSubmit={handleSubmit}
               className="space-y-6 relative z-10"
             >
-              {/* Hidden Inputs (opcionales para EmailJS, pero evitamos romper nada) */}
+              {/* Honeypot anti-spam field — hidden from users, bots will fill it */}
+              <input
+                type="text"
+                name="_honey"
+                defaultValue=""
+                autoComplete="off"
+                aria-hidden="true"
+                tabIndex={-1}
+                style={{ display: 'none' }}
+              />
+
               <input type="hidden" name="to_name" value={resumeData.personalInfo.name} />
 
               {errorMsg && (

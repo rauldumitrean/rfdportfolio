@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { savePortfolioSettings } from "@/app/actions/sanity";
-import { Save, User, Mail, Link as LinkIcon, Briefcase, GraduationCap, FolderGit2, Plus, Trash2, TerminalSquare, AlertTriangle, CheckCircle2, X, UploadCloud, ImageIcon } from "lucide-react";
+import { Save, User, Mail, Briefcase, GraduationCap, FolderGit2, Plus, Trash2, TerminalSquare, AlertTriangle, CheckCircle2, X, UploadCloud, ImageIcon } from "lucide-react";
 import Image from "next/image";
 import { Settings, Experience, Education, SkillCategory, Project, ResumeData } from "@/types";
 
@@ -187,8 +187,9 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
         </h2>
         <div className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">Título Principal</label>
+            <label htmlFor="heroTitle" className="block text-sm font-medium text-gray-400 mb-2">Título Principal</label>
             <input 
+              id="heroTitle"
               type="text" 
               name="heroTitle" 
               defaultValue={settings?.heroTitle || "Hi, I'm"}
@@ -196,8 +197,9 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">Subtítulo / Breve descripción</label>
+            <label htmlFor="heroSubtitle" className="block text-sm font-medium text-gray-400 mb-2">Subtítulo / Breve descripción</label>
             <textarea 
+              id="heroSubtitle"
               name="heroSubtitle" 
               defaultValue={settings?.heroSubtitle || fallbackData.personalInfo.profile}
               rows={4}
@@ -215,20 +217,20 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">Email</label>
-            <input type="email" name="contactEmail" defaultValue={settings?.contactEmail || fallbackData.personalInfo.email} className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition" />
+            <label htmlFor="contactEmail" className="block text-sm font-medium text-gray-400 mb-2">Email</label>
+            <input id="contactEmail" type="email" name="contactEmail" defaultValue={settings?.contactEmail || fallbackData.personalInfo.email} className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">Teléfono</label>
-            <input type="text" name="contactPhone" defaultValue={settings?.contactPhone || fallbackData.personalInfo.phone} className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition" />
+            <label htmlFor="contactPhone" className="block text-sm font-medium text-gray-400 mb-2">Teléfono</label>
+            <input id="contactPhone" type="text" name="contactPhone" defaultValue={settings?.contactPhone || fallbackData.personalInfo.phone} className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">GitHub URL</label>
-            <input type="url" name="githubUrl" defaultValue={settings?.githubUrl || fallbackData.personalInfo.github} className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition" />
+            <label htmlFor="githubUrl" className="block text-sm font-medium text-gray-400 mb-2">GitHub URL</label>
+            <input id="githubUrl" type="url" name="githubUrl" defaultValue={settings?.githubUrl || fallbackData.personalInfo.github} className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">LinkedIn URL</label>
-            <input type="url" name="linkedinUrl" defaultValue={settings?.linkedinUrl || fallbackData.personalInfo.linkedin} className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition" />
+            <label htmlFor="linkedinUrl" className="block text-sm font-medium text-gray-400 mb-2">LinkedIn URL</label>
+            <input id="linkedinUrl" type="url" name="linkedinUrl" defaultValue={settings?.linkedinUrl || fallbackData.personalInfo.linkedin} className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition" />
           </div>
         </div>
       </section>

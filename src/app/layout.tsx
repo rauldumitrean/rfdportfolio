@@ -16,18 +16,33 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Raul Florin | Portfolio",
-  description: "Portafolio personal de Raul Florin, Desarrollador Web Junior y estudiante de Desarrollo de Aplicaciones Web (DAW).",
-  keywords: ["Desarrollador Web", "Frontend", "DAW", "Portfolio", "Raul Florin", "React", "Next.js"],
-  authors: [{ name: "Raul Florin" }],
-  creator: "Raul Florin",
+  title: "Raul Dumitrean | Portfolio",
+  description: "Portafolio personal de Raul Dumitrean, Desarrollador Web Junior y estudiante de Desarrollo de Aplicaciones Web (DAW).",
+  keywords: ["Desarrollador Web", "Frontend", "DAW", "Portfolio", "Raul Dumitrean", "React", "Next.js"],
+  authors: [{ name: "Raul Dumitrean" }],
+  creator: "Raul Dumitrean",
+  metadataBase: new URL("https://rfdportfolio.vercel.app"),
   openGraph: {
-    title: "Raul Florin | Portfolio",
-    description: "Portafolio personal de Raul Florin, Desarrollador Web Junior y estudiante de Desarrollo de Aplicaciones Web (DAW).",
-    url: "https://raulflorin.dev",
-    siteName: "Raul Florin Portfolio",
+    title: "Raul Dumitrean | Portfolio",
+    description: "Portafolio personal de Raul Dumitrean, Desarrollador Web Junior y estudiante de Desarrollo de Aplicaciones Web (DAW).",
+    url: "https://rfdportfolio.vercel.app",
+    siteName: "Raul Dumitrean Portfolio",
     locale: "es_ES",
     type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 675,
+        alt: "Raul Dumitrean — Desarrollador Web Junior",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Raul Dumitrean | Portfolio",
+    description: "Portafolio personal de Raul Dumitrean, Desarrollador Web Junior.",
+    images: ["/og-image.jpg"],
   },
 };
 

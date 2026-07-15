@@ -72,10 +72,11 @@ export default function Projects({ settings }: { settings: Settings }) {
         title: p.title,
         description: p.description.join("\n"),
         tags: p.technologies,
-        githubUrl: "#",
-        liveUrl: "#",
+        githubUrl: p.githubUrl || undefined,
+        liveUrl: p.liveUrl || undefined,
         date: p.date,
-        context: p.context
+        context: p.context,
+        imageUrl: p.imageUrl || undefined,
       }));
 
   return (

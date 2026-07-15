@@ -11,7 +11,12 @@ import Footer from "@/components/sections/Footer";
 export const revalidate = 60; // Revalidate every minute
 
 export default async function Home() {
-  const settings = await client.fetch(getPortfolioSettingsQuery);
+  let settings = null;
+  try {
+    settings = await client.fetch(getPortfolioSettingsQuery);
+  } catch (error) {
+    console.warn("Failed to fetch Sanity settings, using fallback data:", error);
+  }
 
   return (
     <main className="relative min-h-screen w-full flex flex-col">
