@@ -1,12 +1,17 @@
+import dynamic from "next/dynamic";
 import { client } from "@/sanity/lib/client";
 import { getPortfolioSettingsQuery } from "@/sanity/lib/queries";
-import Background3D from "@/components/canvas/Background3D";
+
+// Static imports for above-the-fold or lightweight components
 import Hero from "@/components/sections/Hero";
-import Timeline from "@/components/sections/Timeline";
-import Skills from "@/components/sections/Skills";
-import Projects from "@/components/sections/Projects";
-import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
+
+// Dynamic imports for heavy or below-the-fold components (Lazy loading)
+const Background3D = dynamic(() => import("@/components/canvas/Background3D"));
+const Timeline = dynamic(() => import("@/components/sections/Timeline"));
+const Skills = dynamic(() => import("@/components/sections/Skills"));
+const Projects = dynamic(() => import("@/components/sections/Projects"));
+const Contact = dynamic(() => import("@/components/sections/Contact"));
 
 export const revalidate = 60; // Revalidate every minute
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { resumeData } from "@/data/resumeData";
@@ -97,9 +98,18 @@ export default function Projects({ settings }: { settings: Settings }) {
               <div className={`w-full lg:w-1/2 overflow-hidden rounded-3xl border border-white/10 relative aspect-video bg-[#0a0a0a] ${idx % 2 !== 0 ? 'lg:order-2' : ''}`}>
                 <div className="absolute inset-0 bg-blue-500/10 mix-blend-overlay z-10 group-hover:bg-transparent transition-colors duration-500" />
                 
-                {/* Abstract visualization for the project since we don't have a real image */}
-                <div className="project-img absolute inset-[-10%] w-[120%] h-[120%] flex items-center justify-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/40 via-black to-black bg-cover bg-center" style={project.imageUrl ? { backgroundImage: `url(${project.imageUrl})` } : {}}>
-                  {!project.imageUrl && (
+                {/* Abstract visualization or optimized Image */}
+                <div className="project-img absolute inset-[-10%] w-[120%] h-[120%] flex items-center justify-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/40 via-black to-black">
+                  {project.imageUrl ? (
+                    <Image
+                      src={project.imageUrl}
+                      alt={project.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      loading="lazy"
+                    />
+                  ) : (
                     <div className="relative w-full h-full flex items-center justify-center">
                       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
                       <Server size={120} className="text-blue-500/20 absolute" />
