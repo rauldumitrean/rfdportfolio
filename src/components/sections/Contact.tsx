@@ -135,7 +135,7 @@ export default function Contact({ settings }: { settings: Settings }) {
                   <Mail className="text-blue-400" size={20} />
                 </div>
                 <div>
-                  <span className="block text-sm text-gray-500 font-mono uppercase tracking-wider mb-1">Email</span>
+                  <span className="block text-sm text-gray-400 font-mono uppercase tracking-wider mb-1">Email</span>
                   <span className="text-lg text-gray-200 group-hover:text-blue-400 transition-colors">{settings?.contactEmail || resumeData.personalInfo.email}</span>
                 </div>
               </a>
@@ -145,7 +145,7 @@ export default function Contact({ settings }: { settings: Settings }) {
                   <Phone className="text-blue-400" size={20} />
                 </div>
                 <div>
-                  <span className="block text-sm text-gray-500 font-mono uppercase tracking-wider mb-1">Teléfono</span>
+                  <span className="block text-sm text-gray-400 font-mono uppercase tracking-wider mb-1">Teléfono</span>
                   <span className="text-lg text-gray-200 group-hover:text-blue-400 transition-colors">{settings?.contactPhone || resumeData.personalInfo.phone}</span>
                 </div>
               </a>
@@ -155,17 +155,17 @@ export default function Contact({ settings }: { settings: Settings }) {
                   <MapPin className="text-blue-400" size={20} />
                 </div>
                 <div>
-                  <span className="block text-sm text-gray-500 font-mono uppercase tracking-wider mb-1">Ubicación</span>
+                  <span className="block text-sm text-gray-400 font-mono uppercase tracking-wider mb-1">Ubicación</span>
                   <span className="text-lg text-gray-200">{resumeData.personalInfo.location}</span>
                 </div>
               </div>
             </div>
 
             <div className="pt-8 flex gap-4">
-              <a href={settings?.githubUrl || resumeData.personalInfo.github} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full glass flex items-center justify-center border border-white/10 hover:border-white hover:bg-white/10 transition-all hover:-translate-y-1">
+              <a href={settings?.githubUrl || resumeData.personalInfo.github} aria-label="Visita mi perfil de GitHub" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full glass flex items-center justify-center border border-white/10 hover:border-white hover:bg-white/10 transition-all hover:-translate-y-1">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
               </a>
-              <a href={settings?.linkedinUrl || resumeData.personalInfo.linkedin} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full glass flex items-center justify-center border border-white/10 hover:border-[#0A66C2] hover:bg-[#0A66C2]/20 transition-all hover:-translate-y-1">
+              <a href={settings?.linkedinUrl || resumeData.personalInfo.linkedin} aria-label="Perfil de LinkedIn" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full glass flex items-center justify-center border border-white/10 hover:border-[#0A66C2] hover:bg-[#0A66C2]/20 transition-all hover:-translate-y-1">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white hover:text-[#0A66C2]"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
               </a>
             </div>

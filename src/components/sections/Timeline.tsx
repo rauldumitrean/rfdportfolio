@@ -143,10 +143,10 @@ export default function Timeline({ settings }: { settings: Settings }) {
           <div className="space-y-16">
             <div className="mb-24">
               {/* Column Headers (Desktop Only — lg+) */}
-              <div className="hidden lg:flex justify-between w-full mb-12 relative z-10">
+              <div className="hidden lg:flex justify-between w-full mb-12 relative z-10" role="presentation">
                 <div className="w-5/12 flex justify-end pr-8">
                   <div className="flex items-center gap-3 text-purple-400">
-                    <h3 className="text-2xl font-bold">Formación Académica</h3>
+                    <div className="text-2xl font-bold">Formación Académica</div>
                     <GraduationCap size={28} />
                   </div>
                 </div>
@@ -154,7 +154,7 @@ export default function Timeline({ settings }: { settings: Settings }) {
                 <div className="w-5/12 flex justify-start pl-8">
                   <div className="flex items-center gap-3 text-blue-400">
                     <Briefcase size={28} />
-                    <h3 className="text-2xl font-bold">Vida Laboral</h3>
+                    <div className="text-2xl font-bold">Vida Laboral</div>
                   </div>
                 </div>
               </div>
@@ -176,7 +176,7 @@ export default function Timeline({ settings }: { settings: Settings }) {
                     >
                       <div className={"hidden lg:flex w-5/12 " + (isLeft ? 'justify-end text-right pr-8' : 'justify-start text-left pl-8')}>
                         <div className={"glass p-6 rounded-2xl w-full border border-white/5 transition-all duration-300 hover:bg-white/5 " + hoverBorder}>
-                          <h4 className="text-xl font-bold text-white mb-2">{item.title || item.role || item.degree}</h4>
+                          <h3 className="text-xl font-bold text-white mb-2">{item.title || item.role || item.degree}</h3>
                           <p className={"font-medium mb-4 " + textColor}>{item.company || item.institution || item.school}</p>
                           <p className="text-gray-400 text-sm whitespace-pre-wrap">{item.description || item.details}</p>
                         </div>
@@ -198,7 +198,7 @@ export default function Timeline({ settings }: { settings: Settings }) {
                           <span className={"inline-block px-3 py-1 text-xs font-semibold rounded-full mb-3 border " + (isExp ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : 'bg-purple-500/10 text-purple-400 border-purple-500/20')}>
                             {isExp ? 'Vida Laboral' : 'Formación Académica'}
                           </span>
-                          <h4 className="text-xl font-bold text-white mb-2">{item.title || item.role || item.degree}</h4>
+                          <h3 className="text-xl font-bold text-white mb-2">{item.title || item.role || item.degree}</h3>
                           <p className={"font-medium mb-4 " + textColor}>{item.company || item.institution || item.school}</p>
                           <p className="text-gray-400 text-sm whitespace-pre-wrap">{item.description || item.details}</p>
                         </div>
