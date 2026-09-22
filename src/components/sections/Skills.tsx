@@ -16,7 +16,6 @@ export default function Skills({ settings }: { settings: Settings }) {
     const ctx = gsap.context(() => {
       cardsRef.current.forEach((card, i) => {
         if (!card) return;
-        
         gsap.fromTo(
           card,
           { y: 50, opacity: 0, rotateX: 20 },
@@ -36,18 +35,11 @@ export default function Skills({ settings }: { settings: Settings }) {
         );
       });
     }, containerRef);
-
     return () => ctx.revert();
   }, [settings]);
 
-  const addToRefs = (el: HTMLDivElement | null) => {
-    if (el && !cardsRef.current.includes(el)) {
-      cardsRef.current.push(el);
-    }
-  };
-
-  const skillsData = settings?.skills?.length 
-    ? settings.skills 
+  const skillsData = settings?.skills?.length
+    ? settings.skills
     : resumeData.skills.map((s: SkillCategory) => ({
         category: s.category,
         items: s.items?.map((item: unknown) => typeof item === 'string' ? item : ((item as Record<string, string>).name || String(item))) || []
@@ -60,31 +52,30 @@ export default function Skills({ settings }: { settings: Settings }) {
           Conocimientos Técnicos
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skillsData.map((skillGroup: SkillCategory, idx: number) => (
             <div
               key={idx}
-              ref={addToRefs}
-              className="glass p-8 rounded-3xl border border-white/5 relative overflow-hidden group hover:border-blue-500/30 transition-colors flex flex-col h-full"
+              ref={(el) => { cardsRef.current[idx] = el; }}
+              className="glass p-8 rounded-3xl border border-stone-200 relative overflow-hidden group hover:border-amber-300 hover:shadow-lg transition-all duration-300 flex flex-col h-full"
             >
-              {/* Glow effect on hover */}
-              <div className="absolute top-0 left-0 w-full h-full bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              <div className="absolute -inset-[100%] bg-gradient-to-r from-transparent via-white/5 to-transparent rotate-45 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+              {/* Warm glow on hover */}
+              <div className="absolute top-0 left-0 w-full h-full bg-amber-50/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl" />
 
-              <h3 className="text-2xl font-semibold mb-6 text-white flex items-center gap-3">
-                <span className="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-mono border border-blue-500/30 shrink-0">
+              <h3 className="text-xl font-semibold mb-6 text-[#1C1917] flex items-center gap-3 relative z-10">
+                <span className="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-sm font-mono border border-amber-200 shrink-0">
                   {String(idx + 1).padStart(2, '0')}
                 </span>
                 {skillGroup.category}
               </h3>
 
-              <div className="flex flex-wrap gap-2 mt-auto">
+              <div className="flex flex-wrap gap-2 mt-auto relative z-10">
                 {skillGroup.items.map((item: unknown, i: number) => {
                   const itemName = typeof item === 'string' ? item : (item as Record<string, string>).name;
                   return (
-                    <span 
+                    <span
                       key={i}
-                      className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-300 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-colors cursor-default"
+                      className="px-3 py-1.5 bg-stone-100 border border-stone-200 rounded-lg text-sm text-stone-600 hover:text-amber-700 hover:border-amber-300 hover:bg-amber-50 transition-colors cursor-default"
                     >
                       {itemName}
                     </span>

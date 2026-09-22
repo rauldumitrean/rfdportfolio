@@ -13,6 +13,7 @@ export const getPortfolioSettingsQuery = groq`
     experience,
     education,
     skills,
-    projects
+    projects,
+    certificates
   }
 `;

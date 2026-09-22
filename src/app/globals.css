@@ -1,25 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #050505;
-  --color-foreground: #fafafa;
-  --color-accent: #3b82f6;
-  --color-accent-hover: #60a5fa;
-  --color-surface: rgba(255, 255, 255, 0.03);
-  --color-surface-hover: rgba(255, 255, 255, 0.08);
-  --color-border: rgba(255, 255, 255, 0.1);
+  --color-background: #FAF7F2;
+  --color-foreground: #1C1917;
+  --color-accent: #D97706;
+  --color-accent-hover: #B45309;
+  --color-surface: rgba(255, 252, 245, 0.85);
+  --color-surface-hover: rgba(255, 252, 245, 0.95);
+  --color-border: rgba(28, 25, 23, 0.09);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 :root {
-  --background: #050505;
-  --foreground: #fafafa;
-  color-scheme: dark;
+  --background: #FAF7F2;
+  --foreground: #1C1917;
+  color-scheme: light;
 }
 
 body {
-  background-color: var(--background);
+  background: #FAF7F2;
   color: var(--foreground);
   font-family: var(--font-sans);
   overflow-x: hidden;
@@ -48,34 +48,35 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
-/* Custom Scrollbar for better UI on Windows */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: #F0EAE0;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: #C4A882;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: #A07850;
 }
 
 /* Utilities */
 .glass {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 252, 245, 0.80);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(180, 140, 90, 0.15);
+  box-shadow: 0 4px 24px rgba(28, 25, 23, 0.06);
 }
 
 .text-gradient {
-  background: linear-gradient(to right, #ffffff, #888888);
+  background: linear-gradient(135deg, #D97706 0%, #B45309 50%, #92400E 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

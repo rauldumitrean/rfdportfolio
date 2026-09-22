@@ -1,5 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="120" fill="#09090b" />
-  <rect width="512" height="512" rx="120" fill="none" stroke="#27272a" stroke-width="32" />
-  <path d="M180 150 h100 c50 0 80 30 80 75 c0 35 -20 60 -50 70 l60 75 h-55 l-50 -70 h-45 v70 h-40 v-220 z m40 35 v80 h55 c30 0 40 -15 40 -40 c0 -25 -10 -40 -40 -40 h-55 z" fill="#fafafa" />
+  <rect width="512" height="512" rx="128" fill="#FAF7F2"/>
+  <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-weight="bold" font-size="280" fill="#D97706" letter-spacing="-10">rfd</text>
 </svg>

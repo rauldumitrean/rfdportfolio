@@ -49,12 +49,22 @@ export interface Project {
   liveUrl?: string;
 }
 
+export interface Certificate {
+  _key?: string;
+  title: string;
+  issuer: string;
+  date: string;
+  url?: string;
+  svgIcon?: string; // Optional: custom SVG string or an icon identifier
+}
+
 export interface ResumeData {
   personalInfo: PersonalInfo;
   experience: Experience[];
   education: Education[];
   skills: SkillCategory[];
   projects: Project[];
+  certificates?: Certificate[];
 }
 
 export interface Settings {
@@ -72,4 +82,5 @@ export interface Settings {
   education?: Education[];
   skills?: SkillCategory[];
   projects?: Project[];
+  certificates?: Certificate[];
 }

@@ -18,7 +18,6 @@ export default function Projects({ settings }: { settings: Settings }) {
     const ctx = gsap.context(() => {
       projectsRef.current.forEach((project) => {
         if (!project) return;
-        
         gsap.fromTo(
           project,
           { opacity: 0, y: 100, scale: 0.95 },
@@ -36,7 +35,6 @@ export default function Projects({ settings }: { settings: Settings }) {
           }
         );
 
-        // Parallax image
         const img = project.querySelector(".project-img");
         if (img) {
           gsap.fromTo(
@@ -57,18 +55,11 @@ export default function Projects({ settings }: { settings: Settings }) {
         }
       });
     }, containerRef);
-
     return () => ctx.revert();
   }, [settings]);
 
-  const addToRefs = (el: HTMLDivElement | null) => {
-    if (el && !projectsRef.current.includes(el)) {
-      projectsRef.current.push(el);
-    }
-  };
-
-  const projectsData = settings?.projects?.length 
-    ? settings.projects 
+  const projectsData = settings?.projects?.length
+    ? settings.projects
     : resumeData.projects.map((p) => ({
         title: p.title,
         description: p.description.join("\n"),
@@ -91,15 +82,14 @@ export default function Projects({ settings }: { settings: Settings }) {
           {projectsData.map((project: Project, idx: number) => (
             <div
               key={idx}
-              ref={addToRefs}
+              ref={(el) => { projectsRef.current[idx] = el; }}
               className="flex flex-col lg:flex-row items-center gap-12 group"
             >
-              {/* Project Image/Visualizer */}
-              <div className={`w-full lg:w-1/2 overflow-hidden rounded-3xl border border-white/10 relative aspect-video bg-[#0a0a0a] ${idx % 2 !== 0 ? 'lg:order-2' : ''}`}>
-                <div className="absolute inset-0 bg-blue-500/10 mix-blend-overlay z-10 group-hover:bg-transparent transition-colors duration-500" />
-                
-                {/* Abstract visualization or optimized Image */}
-                <div className="project-img absolute inset-[-10%] w-[120%] h-[120%] flex items-center justify-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/40 via-black to-black">
+              {/* Project Image */}
+              <div className={`w-full lg:w-1/2 overflow-hidden rounded-3xl border border-stone-200 relative aspect-video bg-gradient-to-br from-amber-50 to-orange-50 shadow-md group-hover:shadow-xl transition-shadow duration-500 ${idx % 2 !== 0 ? 'lg:order-2' : ''}`}>
+                <div className="absolute inset-0 bg-amber-400/5 z-10 group-hover:bg-transparent transition-colors duration-500" />
+
+                <div className="project-img absolute inset-[-10%] w-[120%] h-[120%] flex items-center justify-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-100/80 via-orange-50 to-stone-50">
                   {project.imageUrl ? (
                     <Image
                       src={project.imageUrl}
@@ -111,15 +101,15 @@ export default function Projects({ settings }: { settings: Settings }) {
                     />
                   ) : (
                     <div className="relative w-full h-full flex items-center justify-center">
-                      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
-                      <Server size={120} className="text-blue-500/20 absolute" />
-                      <ShieldAlert size={60} className="text-blue-400 animate-pulse" />
+                      <div className="absolute inset-0 bg-[linear-gradient(rgba(217,119,6,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(217,119,6,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
+                      <Server size={120} className="text-amber-200 absolute" />
+                      <ShieldAlert size={60} className="text-amber-600 animate-pulse" />
                     </div>
                   )}
                 </div>
 
                 {project.context && (
-                  <div className="absolute bottom-4 left-4 z-20 glass px-4 py-2 rounded-full text-xs font-mono text-blue-300 border border-blue-500/30">
+                  <div className="absolute bottom-4 left-4 z-20 glass px-4 py-2 rounded-full text-xs font-mono text-amber-700 border border-amber-200 shadow-sm">
                     {project.context}
                   </div>
                 )}
@@ -128,16 +118,16 @@ export default function Projects({ settings }: { settings: Settings }) {
               {/* Project Info */}
               <div className="w-full lg:w-1/2 flex flex-col items-start">
                 {project.date && (
-                  <span className="text-blue-500 font-mono text-sm tracking-wider uppercase mb-4 block">
+                  <span className="text-amber-600 font-mono text-sm tracking-wider uppercase mb-4 block">
                     {project.date}
                   </span>
                 )}
-                <h3 className="text-3xl md:text-4xl font-bold mb-6 text-white group-hover:text-blue-400 transition-colors">
+                <h3 className="text-3xl md:text-4xl font-bold mb-6 text-[#1C1917] group-hover:text-amber-700 transition-colors">
                   {project.title}
                 </h3>
-                
-                <div className="glass p-6 rounded-2xl border border-white/5 mb-8 w-full relative z-20">
-                  <p className="text-gray-400 text-sm md:text-base whitespace-pre-wrap leading-relaxed">
+
+                <div className="glass p-6 rounded-2xl border border-stone-200 mb-8 w-full relative z-20 shadow-sm">
+                  <p className="text-stone-500 text-sm md:text-base whitespace-pre-wrap leading-relaxed">
                     {project.description}
                   </p>
                 </div>
@@ -146,7 +136,7 @@ export default function Projects({ settings }: { settings: Settings }) {
                   {project.tags?.map((tech: string, i: number) => (
                     <span
                       key={i}
-                      className="px-3 py-1 bg-white/5 rounded-full text-xs font-mono text-gray-300 border border-white/10 hover:border-blue-500/50 hover:text-blue-400 transition-colors cursor-default"
+                      className="px-3 py-1 bg-stone-100 rounded-full text-xs font-mono text-stone-600 border border-stone-200 hover:border-amber-300 hover:text-amber-700 hover:bg-amber-50 transition-colors cursor-default"
                     >
                       {tech}
                     </span>
@@ -154,28 +144,37 @@ export default function Projects({ settings }: { settings: Settings }) {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-4">
-                  {project.githubUrl && (
+                  {project.githubUrl && project.githubUrl !== "#" ? (
                     <a
-                      href={project.githubUrl === "#" ? "#" : project.githubUrl}
-                      target={project.githubUrl === "#" ? "_self" : "_blank"}
+                      href={project.githubUrl}
+                      target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-full font-medium hover:scale-105 transition-all"
-                      onClick={(e) => { if (project.githubUrl === "#") e.preventDefault() }}
+                      aria-label={`Ver código fuente de ${project.title} en GitHub`}
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-stone-50 text-stone-700 border border-stone-300 rounded-full font-medium hover:scale-105 hover:border-stone-400 transition-all shadow-sm"
                     >
                       <Code2 size={18} /> Ver Código
                     </a>
-                  )}
-                  {project.liveUrl && (
+                  ) : project.githubUrl === "#" ? (
+                    <span className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-stone-100 text-stone-400 border border-stone-200 rounded-full font-medium cursor-not-allowed">
+                      <Code2 size={18} /> Código no disponible
+                    </span>
+                  ) : null}
+
+                  {project.liveUrl && project.liveUrl !== "#" ? (
                     <a
-                      href={project.liveUrl === "#" ? "#" : project.liveUrl}
-                      target={project.liveUrl === "#" ? "_self" : "_blank"}
+                      href={project.liveUrl}
+                      target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-black rounded-full font-medium hover:scale-105 transition-transform"
-                      onClick={(e) => { if (project.liveUrl === "#") e.preventDefault() }}
+                      aria-label={`Visitar el proyecto ${project.title}`}
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-full font-medium hover:bg-amber-700 hover:scale-105 hover:shadow-[0_8px_25px_rgba(217,119,6,0.40)] transition-all"
                     >
                       Ver Proyecto <ExternalLink size={18} />
                     </a>
-                  )}
+                  ) : project.liveUrl === "#" ? (
+                    <span className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-stone-100 text-stone-400 rounded-full font-medium cursor-not-allowed">
+                      Ver Proyecto <ExternalLink size={18} />
+                    </span>
+                  ) : null}
                 </div>
               </div>
             </div>

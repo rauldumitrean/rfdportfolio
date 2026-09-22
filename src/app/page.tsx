@@ -10,6 +10,7 @@ import Footer from "@/components/sections/Footer";
 const Background3D = dynamic(() => import("@/components/canvas/Background3D"));
 const Timeline = dynamic(() => import("@/components/sections/Timeline"));
 const Skills = dynamic(() => import("@/components/sections/Skills"));
+const Certificates = dynamic(() => import("@/components/sections/Certificates"));
 const Projects = dynamic(() => import("@/components/sections/Projects"));
 const Contact = dynamic(() => import("@/components/sections/Contact"));
 
@@ -30,6 +31,7 @@ export default async function Home() {
       <Hero settings={settings} />
       <Timeline settings={settings} />
       <Skills settings={settings} />
+      <Certificates settings={settings} />
       <Projects settings={settings} />
       <Contact settings={settings} />
       

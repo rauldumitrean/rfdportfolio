@@ -8,9 +8,9 @@ import * as THREE from 'three';
 function getParticleCount(): number {
   if (typeof window === "undefined") return 5000;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return 0;
-  if (window.innerWidth < 768) return 1000;
-  if (window.innerWidth < 1024) return 2500;
-  return 5000;
+  if (window.innerWidth < 768) return 800;
+  if (window.innerWidth < 1024) return 2000;
+  return 4000;
 }
 
 const Particles = ({ count }: { count: number }) => {
@@ -31,8 +31,8 @@ const Particles = ({ count }: { count: number }) => {
 
   useFrame((state, delta) => {
     if (ref.current) {
-      ref.current.rotation.x -= delta / 10;
-      ref.current.rotation.y -= delta / 15;
+      ref.current.rotation.x -= delta / 12;
+      ref.current.rotation.y -= delta / 18;
     }
   });
 
@@ -41,11 +41,11 @@ const Particles = ({ count }: { count: number }) => {
       <Points ref={ref} positions={sphere} stride={3} frustumCulled={false}>
         <PointMaterial
           transparent
-          color="#3b82f6"
-          size={0.05}
+          color="#D97706"
+          size={0.04}
           sizeAttenuation={true}
           depthWrite={false}
-          opacity={0.6}
+          opacity={0.35}
         />
       </Points>
     </group>
@@ -53,34 +53,28 @@ const Particles = ({ count }: { count: number }) => {
 };
 
 export default function Background3D() {
-  // particleCount is initialised with the server-safe value (5000).
-  // After hydration we read the real device-aware value via a ref
-  // and re-render once — avoids the "setState in effect" lint rule.
-  const countRef = useRef<number>(5000);
+  const countRef = useRef<number>(4000);
   const [particleCount, setParticleCount] = useState<number | null>(null);
 
   useEffect(() => {
     const realCount = getParticleCount();
     countRef.current = realCount;
-    // Use a timeout so the setState fires outside the synchronous effect body
     const id = setTimeout(() => setParticleCount(realCount), 0);
     return () => clearTimeout(id);
   }, []);
 
-  // While computing (SSR / first paint): plain black background
   if (particleCount === null) {
-    return <div className="fixed top-0 left-0 w-full h-full z-[-1] bg-black pointer-events-none" />;
+    return <div className="fixed top-0 left-0 w-full h-full z-[-1] bg-[#FAF7F2] pointer-events-none" />;
   }
 
-  // User prefers reduced motion → no canvas at all
   if (particleCount === 0) {
-    return <div className="fixed top-0 left-0 w-full h-full z-[-1] bg-black pointer-events-none" />;
+    return <div className="fixed top-0 left-0 w-full h-full z-[-1] bg-[#FAF7F2] pointer-events-none" />;
   }
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full z-[-1] bg-black/90 pointer-events-none">
+    <div className="fixed top-0 left-0 w-full h-full z-[-1] bg-[#FAF7F2] pointer-events-none">
       <Canvas camera={{ position: [0, 0, 5] }}>
-        <fog attach="fog" args={["#050505", 2, 10]} />
+        <fog attach="fog" args={["#FAF7F2", 2, 10]} />
         <ambientLight intensity={0.5} />
         <Particles count={particleCount} />
       </Canvas>

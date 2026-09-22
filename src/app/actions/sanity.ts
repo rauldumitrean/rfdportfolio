@@ -20,6 +20,7 @@ export async function savePortfolioSettings(formData: FormData) {
     const educationJson = formData.get("education") as string;
     const skillsJson = formData.get("skills") as string;
     const projectsJson = formData.get("projects") as string;
+    const certificatesJson = formData.get("certificates") as string;
 
     const generateKey = (prefix: string, index: number) => `${prefix}_${crypto.randomUUID()}_${index}`;
 
@@ -54,6 +55,7 @@ export async function savePortfolioSettings(formData: FormData) {
       education: educationJson ? JSON.parse(educationJson).map((e: Record<string, unknown>, i: number) => ({...e, _key: generateKey("edu", i)})) : [],
       skills: skillsJson ? JSON.parse(skillsJson).map((e: Record<string, unknown>, i: number) => ({...e, _key: generateKey("skill", i)})) : [],
       projects: parsedProjects,
+      certificates: certificatesJson ? JSON.parse(certificatesJson).map((e: Record<string, unknown>, i: number) => ({...e, _key: generateKey("cert", i)})) : [],
     };
 
     await writeClient.createOrReplace(data);
