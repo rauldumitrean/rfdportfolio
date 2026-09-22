@@ -179,14 +179,19 @@ export default function AdminClientForm({ settings, fallbackData }: { settings: 
     
     try {
       const formData = new FormData(formRef.current);
-      await savePortfolioSettings(formData);
-      setSuccessMsg("¡Tus cambios han sido guardados con éxito en Sanity!");
-      setTimeout(() => {
-        setShowModal(false);
-        setSuccessMsg("");
-      }, 3000);
+      const result = await savePortfolioSettings(formData);
+      
+      if (result?.error) {
+        setErrorMsg(result.error);
+      } else {
+        setSuccessMsg("¡Tus cambios han sido guardados con éxito en Sanity!");
+        setTimeout(() => {
+          setShowModal(false);
+          setSuccessMsg("");
+        }, 3000);
+      }
     } catch (err: unknown) {
-      setErrorMsg((err as Error).message || "Error al guardar. Verifica la contraseña.");
+      setErrorMsg((err as Error).message || "Error al guardar. Verifica la conexión.");
     } finally {
       setIsSubmitting(false);
     }

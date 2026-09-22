@@ -12,7 +12,7 @@ export async function savePortfolioSettings(formData: FormData) {
   const password = formData.get("adminPassword");
   
   if (password !== process.env.ADMIN_PASSWORD) {
-    throw new Error("Contraseña incorrecta");
+    return { error: "Contraseña incorrecta o no configurada en el servidor." };
   }
 
   try {
@@ -60,8 +60,15 @@ export async function savePortfolioSettings(formData: FormData) {
 
     await writeClient.createOrReplace(data);
     revalidatePath("/");
-  } catch (error) {
+    return { success: true };
+  } catch (error: any) {
     console.error("Error saving to Sanity:", error);
-    throw new Error("Failed to save settings");
+    
+    // Check if it's a default project ID error
+    if (error?.message?.includes("default-project-id")) {
+      return { error: "Falta configurar Sanity. El proyecto está usando 'default-project-id'. Añade las variables de entorno NEXT_PUBLIC_SANITY_PROJECT_ID y SANITY_API_TOKEN en Vercel." };
+    }
+    
+    return { error: error?.message || "Ocurrió un error al guardar en la base de datos." };
   }
 }
