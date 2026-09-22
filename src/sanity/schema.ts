@@ -125,6 +125,24 @@ export const portfolioSettings = defineType({
         },
       ],
     }),
+    // CERTIFICADOS
+    defineField({
+      name: "certificates",
+      title: "Certificados",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "title", title: "Título del Certificado", type: "string" },
+            { name: "issuer", title: "Emisor", type: "string" },
+            { name: "date", title: "Fecha", type: "string" },
+            { name: "url", title: "URL de la Credencial", type: "string" },
+            { name: "svgIcon", title: "Código SVG (Opcional)", type: "text" },
+          ],
+        },
+      ],
+    }),
   ],
 });
 
